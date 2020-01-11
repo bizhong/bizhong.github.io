@@ -1,13 +1,14 @@
 const path = require('path')
-const LBZUI_CSS_PATH = 'node_modules/@lbzui/vue/src/assets/css/'
 
-function resolve (dir) {
-  return path.resolve(__dirname, dir)
-}
+const LBZUI_CSS_PATH = 'node_modules/@lbzui/vue/src/assets/css/'
 
 process.env.VUE_APP_SITE_URL = process.env.NODE_ENV === 'production'
   ? 'https://lanbizhong.com/'
   : '/'
+
+function resolve (dir) {
+  return path.resolve(__dirname, dir)
+}
 
 module.exports = {
   pwa: {
@@ -16,15 +17,13 @@ module.exports = {
       swSrc: 'src/service-worker.js'
     },
     name: 'LAN Bizhong',
-    themeColor: '#3367d6',
-    msTileColor: '#fff',
+    themeColor: '#1a73e8',
+    msTileColor: '#1a73e8',
     appleMobileWebAppCapable: 'yes',
     manifestOptions: {
-      dir: 'ltr',
       lang: 'en',
+      dir: 'ltr',
       description: 'LAN Bizhong\'s personal website',
-      background_color: '#fff',
-      orientation: 'any',
       icons: [
         {
           src: './img/logo/pwa/192x192.png',
@@ -36,7 +35,9 @@ module.exports = {
           sizes: '512x512',
           type: 'image/png'
         }
-      ]
+      ],
+      orientation: 'portrait',
+      background_color: '#fff'
     },
     iconPaths: {
       favicon32: 'img/logo/favicon/32x32.png',

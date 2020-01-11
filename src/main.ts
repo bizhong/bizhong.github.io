@@ -6,7 +6,13 @@ import store from './store';
 import './assets/css/lbzui/index.less';
 import {
   Backdrop,
+  Button,
+  Icon,
   IconButton,
+  List,
+  ListItem,
+  Tab,
+  TabItem,
   TopAppBar,
 } from '@lbzui/vue';
 
@@ -16,7 +22,13 @@ Vue.prototype.$LBZUI = {
 };
 
 Vue.use(Backdrop);
+Vue.use(Button);
+Vue.use(Icon);
 Vue.use(IconButton);
+Vue.use(List);
+Vue.use(ListItem);
+Vue.use(Tab);
+Vue.use(TabItem);
 Vue.use(TopAppBar);
 
 Vue.config.productionTip = false;
