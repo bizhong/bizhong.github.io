@@ -16,7 +16,7 @@ import {
   TopAppBar,
 } from '@lbzui/vue';
 
-Vue.prototype.$LBZUI = {
+Vue.prototype.$lbzui = {
   ripple: true,
   dense: false,
 };

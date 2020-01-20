@@ -37,42 +37,40 @@
       </lbz-top-app-bar>
     </template>
     <template #back-layer-content>
-      <div>
-        <lbz-list
-          class="is-nav"
-          tag="nav"
-          router-link
-          item-tag="a"
-          subtitle="Navigation"
-        >
-          <lbz-list-item to="/">Home</lbz-list-item>
-          <lbz-list-item to="/articles">Articles</lbz-list-item>
-          <lbz-list-item to="/develop">Develop</lbz-list-item>
-          <lbz-list-item to="/about">About</lbz-list-item>
-        </lbz-list>
-        <lbz-list type="two-line" subtitle="Settings">
-          <lbz-list-item>
-            <span class="lbz-list-item__title">Choose language</span>
-            <span class="lbz-list-item__subtitle">English</span>
-          </lbz-list-item>
-          <lbz-list-item>
-            <span class="lbz-list-item__title">Choose theme</span>
-            <span class="lbz-list-item__subtitle">Automatic (Light: 06:00–18:00 BJT, Dark: 18:00–06:00 BJT)</span>
-          </lbz-list-item>
-        </lbz-list>
-        <lbz-list subtitle="Links">
-          <lbz-list-item>
-            <a href="https://github.com/bizhong" target="_blank">GitHub</a>,
-            <a href="https://juejin.im/user/5acce57b5188255c93239e72/posts" target="_blank">掘金</a>,
-            <a href="https://zhuanlan.zhihu.com/bizhong" target="_blank">知乎专栏</a>,
-            <a href="https://www.jianshu.com/u/9281723851d6" target="_blank">简书</a>
-          </lbz-list-item>
-          <lbz-list-item>微信订阅号</lbz-list-item>
-          <lbz-list-item>Email Me</lbz-list-item>
-        </lbz-list>
-        <p>Build with <a href="https://lbzui-vue.lanbizhong.com/" target="_blank">@lbzui/vue</a></p>
-        <p>© 2019 LAN Bizhong</p>
-      </div>
+      <lbz-list
+        class="is-nav"
+        tag="nav"
+        router-link
+        item-tag="a"
+        subtitle="Navigation"
+      >
+        <lbz-list-item to="/">Home</lbz-list-item>
+        <lbz-list-item to="/articles">Articles</lbz-list-item>
+        <lbz-list-item to="/develop">Develop</lbz-list-item>
+        <lbz-list-item to="/about">About</lbz-list-item>
+      </lbz-list>
+      <lbz-list type="two-line" subtitle="Settings">
+        <lbz-list-item>
+          <span class="lbz-list-item__title">Choose language</span>
+          <span class="lbz-list-item__subtitle">English</span>
+        </lbz-list-item>
+        <lbz-list-item>
+          <span class="lbz-list-item__title">Choose theme</span>
+          <span class="lbz-list-item__subtitle">Automatic (Light: 06:00–18:00 BJT, Dark: 18:00–06:00 BJT)</span>
+        </lbz-list-item>
+      </lbz-list>
+      <lbz-list class="lbz-state-no-before--descendant" subtitle="Links">
+        <lbz-list-item>
+          <a href="https://github.com/bizhong" target="_blank">GitHub</a>,
+          <a href="https://juejin.im/user/5acce57b5188255c93239e72/posts" target="_blank">掘金</a>,
+          <a href="https://zhuanlan.zhihu.com/bizhong" target="_blank">知乎专栏</a>,
+          <a href="https://www.jianshu.com/u/9281723851d6" target="_blank">简书</a>
+        </lbz-list-item>
+        <lbz-list-item>微信订阅号</lbz-list-item>
+        <lbz-list-item>Email Me</lbz-list-item>
+      </lbz-list>
+      <p>Build with <a href="https://lbzui-vue.lanbizhong.com/" target="_blank">@lbzui/vue</a></p>
+      <p>© 2019 LAN Bizhong</p>
     </template>
     <template #front-layer-content>
       <keep-alive>
@@ -131,7 +129,7 @@ export default class App extends Vue {
 body {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
     "PingFang SC", "Microsoft YaHei UI", "Microsoft YaHei", sans-serif;
-  .lbz-typography('body1');
+  .lbz-typography("body1");
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--lbz-theme-text-medium-emphasis-on-surface);
@@ -153,8 +151,7 @@ body {
     flex: 1;
 
     .lbz-tab-item {
-      flex: none;
-      .lbz-typography('subtitle1');
+      .lbz-typography("subtitle1");
     }
 
     .lbz-tab-item__indicator {
