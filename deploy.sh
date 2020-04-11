@@ -7,8 +7,8 @@
 # abort on errors
 set -e
 
-# build
-npm run build
+# generate static project
+npm run generate --fail-on-error
 
 # navigate into the build output directory
 cd dist
