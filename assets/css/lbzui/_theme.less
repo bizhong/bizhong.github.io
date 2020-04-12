@@ -1,0 +1,100 @@
+// Theme
+// usage: `#lbz-theme.x[y]`
+//        `#lbz-theme-text.x[y]`
+//        `#lbz-theme-outline[x]`
+//        `#lbz-theme-scrim[x]`
+
+@white: #fff;
+@black: #000;
+
+// Theme colors
+#lbz-theme() {
+  // Light theme
+  .light() {
+    // Primary color
+    primary: #1a73e8;
+    primary-variant: #1a73e8; // System bar (dark variant), Floating action button (light variant)
+
+    // Secondary color:
+    // Floating action buttons
+    // Selection controls, like sliders and switches
+    // Highlighting selected text
+    // Progress bars
+    // Links and headlines
+    secondary: #1a73e8;
+    secondary-variant: #1a73e8;
+
+    // Surface, background, and error colors
+    background: @white;
+    surface: @white;
+    error: #c53929;
+
+    // Typography and iconography colors
+    on-primary: @white;
+    on-primary-variant: @white;
+    on-secondary: @white;
+    on-secondary-variant: @white;
+    on-background: @black;
+    on-surface: @black;
+    on-error: @white;
+  }
+
+  // Dark theme
+  .dark() {
+    // Primary color
+    primary: #8ab4f8;
+    primary-variant: #1a73e8; // System bar (dark variant), Floating action button (light variant)
+
+    // Secondary color:
+    // Floating action buttons
+    // Selection controls, like sliders and switches
+    // Highlighting selected text
+    // Progress bars
+    // Links and headlines
+    secondary: #8ab4f8;
+    secondary-variant: #1a73e8;
+
+    // Surface, background, and error colors
+    background: #121212;
+    surface: #121212;
+    error: #f28b82;
+
+    // Typography and iconography colors
+    on-primary: @black;
+    on-primary-variant: @white;
+    on-secondary: @black;
+    on-secondary-variant: @white;
+    on-background: @white;
+    on-surface: @white;
+    on-error: @black;
+  }
+}
+
+// Typography and iconography colors
+#lbz-theme-text() {
+  // Light text on dark backgrounds
+  .light() {
+    high-emphasis: @white; // High-emphasis text
+    medium-emphasis: rgba(@white, .7); // Medium-emphasis text and hint text
+    disabled: rgba(@white, .3); // Disabled text
+  }
+
+  // Dark text on light backgrounds
+  .dark() {
+    high-emphasis: rgba(@black, .87); // High-emphasis text
+    medium-emphasis: rgba(@black, .54); // Medium-emphasis text and hint text
+    disabled: rgba(@black, .38); // Disabled text
+  }
+}
+
+// Outline colors
+#lbz-theme-outline() {
+  light: rgba(@white, .12);
+  dark: rgba(@black, .12);
+}
+
+// Scrim backgrounds
+#lbz-theme-scrim() {
+  light: rgba(@white, .5);
+  dark: rgba(@black, .32);
+}

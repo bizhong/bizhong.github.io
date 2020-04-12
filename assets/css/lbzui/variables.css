@@ -1,0 +1,72 @@
+/* CSS Variables (postcss-preset-env `importFrom` only) */
+
+:root {
+  /* Layout grid */
+  --lbz-layout-grid-column: 12;
+  --lbz-layout-grid-gutter: 24px;
+  --lbz-layout-grid-margin: 24px;
+
+  /* Shape */
+  --lbz-shape-size-small: 4px;
+  --lbz-shape-size-medium: 4px;
+  --lbz-shape-size-large: 0;
+
+  /* Surface */
+  --lbz-surface-0: #fff;
+  --lbz-surface-1: #fff;
+  --lbz-surface-2: #fff;
+  --lbz-surface-3: #fff;
+  --lbz-surface-4: #fff;
+  --lbz-surface-6: #fff;
+  --lbz-surface-8: #fff;
+  --lbz-surface-12: #fff;
+  --lbz-surface-16: #fff;
+  --lbz-surface-24: #fff;
+
+  /* Theme */
+  --lbz-theme-primary: #1a73e8;
+  --lbz-theme-primary-variant: #1a73e8;
+  --lbz-theme-secondary: #1a73e8;
+  --lbz-theme-secondary-variant: #1a73e8;
+  --lbz-theme-background: #fff;
+  --lbz-theme-surface: #fff;
+  --lbz-theme-error: #c53929;
+  --lbz-theme-light: #fff;
+  --lbz-theme-dark: #000;
+  --lbz-theme-on-primary: #fff;
+  --lbz-theme-on-primary-variant: #fff;
+  --lbz-theme-on-secondary: #fff;
+  --lbz-theme-on-secondary-variant: #fff;
+  --lbz-theme-on-background: #000;
+  --lbz-theme-on-surface: #000;
+  --lbz-theme-on-error: #fff;
+  --lbz-theme-on-light: #000;
+  --lbz-theme-on-dark: #fff;
+  --lbz-theme-text-high-emphasis-on-primary: #fff;
+  --lbz-theme-text-medium-emphasis-on-primary: rgba(255, 255, 255, 0.7);
+  --lbz-theme-text-disabled-on-primary: rgba(255, 255, 255, 0.3);
+  --lbz-theme-text-high-emphasis-on-secondary: #fff;
+  --lbz-theme-text-medium-emphasis-on-secondary: rgba(255, 255, 255, 0.7);
+  --lbz-theme-text-disabled-on-secondary: rgba(255, 255, 255, 0.3);
+  --lbz-theme-text-high-emphasis-on-surface: rgba(0, 0, 0, 0.87);
+  --lbz-theme-text-medium-emphasis-on-surface: rgba(0, 0, 0, 0.54);
+  --lbz-theme-text-disabled-on-surface: rgba(0, 0, 0, 0.38);
+  --lbz-theme-text-high-emphasis-on-error: #fff;
+  --lbz-theme-text-medium-emphasis-on-error: rgba(255, 255, 255, 0.7);
+  --lbz-theme-text-disabled-on-error: rgba(255, 255, 255, 0.3);
+  --lbz-theme-text-high-emphasis-on-light: rgba(0, 0, 0, 0.87);
+  --lbz-theme-text-medium-emphasis-on-light: rgba(0, 0, 0, 0.54);
+  --lbz-theme-text-disabled-on-light: rgba(0, 0, 0, 0.38);
+  --lbz-theme-text-high-emphasis-on-dark: #fff;
+  --lbz-theme-text-medium-emphasis-on-dark: rgba(255, 255, 255, 0.7);
+  --lbz-theme-text-disabled-on-dark: rgba(255, 255, 255, 0.3);
+  --lbz-theme-outline-on-primary: rgba(255, 255, 255, 0.12);
+  --lbz-theme-outline-on-secondary: rgba(255, 255, 255, 0.12);
+  --lbz-theme-outline-on-background: rgba(0, 0, 0, 0.12);
+  --lbz-theme-outline-on-surface: rgba(0, 0, 0, 0.12);
+  --lbz-theme-outline-on-error: rgba(255, 255, 255, 0.12);
+  --lbz-theme-outline-on-light: rgba(0, 0, 0, 0.12);
+  --lbz-theme-outline-on-dark: rgba(255, 255, 255, 0.12);
+  --lbz-theme-scrim-light: rgba(255, 255, 255, 0.5);
+  --lbz-theme-scrim-dark: rgba(0, 0, 0, 0.32);
+}

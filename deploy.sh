@@ -18,7 +18,7 @@ echo 'lanbizhong.com' > CNAME
 
 git init
 git add -A
-git commit -m '0.1.0'
+git commit -m '1.0.0'
 
 # if you are deploying to https://<USERNAME>.github.io
 git push -f git@github.com:bizhong/bizhong.github.io.git master

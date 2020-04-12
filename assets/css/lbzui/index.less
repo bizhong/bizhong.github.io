@@ -1,0 +1,62 @@
+@import "normalize.css";
+
+/*! ~@lbzui/vue v0.5.1 | MIT License | https://github.com/lbzui/vue */
+body {
+  background-color: var(--lbz-theme-background);
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+
+  // lock-body-scroll
+  &.lbz-is-locked {
+    overflow: hidden;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: var(--lbz-theme-primary);
+  outline: none;
+}
+
+::selection {
+  color: var(--lbz-theme-text-high-emphasis-on-secondary);
+  background-color: var(--lbz-theme-secondary);
+}
+
+// Variables
+@import "~@lbzui/vue/src/assets/css/variables/layout-grid.less";
+@import "~@lbzui/vue/src/assets/css/variables/shape.less";
+@import "~@lbzui/vue/src/assets/css/variables/surface.less";
+@import "~@lbzui/vue/src/assets/css/variables/theme.less";
+
+// Utilities
+@import "~@lbzui/vue/src/assets/css/utilities/aspect-ratio.less";
+@import "~@lbzui/vue/src/assets/css/utilities/clearfix.less";
+@import "~@lbzui/vue/src/assets/css/utilities/elevation.less";
+@import "~@lbzui/vue/src/assets/css/utilities/layout-grid.less";
+@import "~@lbzui/vue/src/assets/css/utilities/surface.less";
+@import "~@lbzui/vue/src/assets/css/utilities/truncate.less";
+@import "~@lbzui/vue/src/assets/css/utilities/typography.less";
+
+// Components
+@import "~@lbzui/vue/src/assets/css/components/backdrop.less";
+@import "~@lbzui/vue/src/assets/css/components/button.less";
+@import "~@lbzui/vue/src/assets/css/components/card.less";
+@import "~@lbzui/vue/src/assets/css/components/checkbox.less";
+@import "~@lbzui/vue/src/assets/css/components/dialog.less";
+@import "~@lbzui/vue/src/assets/css/components/divider.less";
+@import "~@lbzui/vue/src/assets/css/components/drawer.less";
+@import "~@lbzui/vue/src/assets/css/components/empty-state.less";
+@import "~@lbzui/vue/src/assets/css/components/fab.less";
+@import "~@lbzui/vue/src/assets/css/components/icon.less";
+@import "~@lbzui/vue/src/assets/css/components/icon-button.less";
+@import "~@lbzui/vue/src/assets/css/components/list.less";
+@import "~@lbzui/vue/src/assets/css/components/list-item.less";
+@import "~@lbzui/vue/src/assets/css/components/radio.less";
+@import "~@lbzui/vue/src/assets/css/components/snackbar.less";
+@import "~@lbzui/vue/src/assets/css/components/state.less";
+@import "~@lbzui/vue/src/assets/css/components/switch.less";
+@import "~@lbzui/vue/src/assets/css/components/tab.less";
+@import "~@lbzui/vue/src/assets/css/components/tab-item.less";
+@import "~@lbzui/vue/src/assets/css/components/top-app-bar.less";
