@@ -3,7 +3,7 @@
     <div>
       <logo />
       <h1 class="title">
-        LAN.Bizhong
+        LAN Bizhong
       </h1>
       <h2 class="subtitle">
         LAN Bizhong's personal website

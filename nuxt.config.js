@@ -11,7 +11,7 @@ export default {
       dir: 'ltr',
       prefix: 'og: http://ogp.me/ns#'
     },
-    title: process.env.npm_package_name || '',
+    title: process.env.npm_package_name,
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
@@ -32,7 +32,7 @@ export default {
       { name: 'nightmode', content: 'disable' },
       { name: 'layoutmode', content: 'fitscreen' },
       { name: 'wap-font-scale', content: 'no' },
-      { name: 'application-name', content: process.env.npm_package_name || '' },
+      { name: 'application-name', content: process.env.npm_package_name },
       {
         hid: 'description',
         name: 'description',
@@ -55,7 +55,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons&display=block'
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap|Material+Icons&display=block'
       }
     ],
     bodyAttrs: {
@@ -65,7 +65,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#1a73e8' },
+  loading: { color: '#1a73e8', failedColor: '#c53929' },
   /*
    ** Global CSS
    */
@@ -91,7 +91,18 @@ export default {
       }
     ]
   ],
-
+  /*
+   ** Nuxt.js modules
+   */
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa'
+  ],
+  /*
+   ** Style Resources module configuration
+   ** See https://github.com/nuxt-community/style-resources-module
+   */
   styleResources: {
     less: [
       // variables
@@ -107,14 +118,13 @@ export default {
     ]
   },
   /*
-   ** Nuxt.js modules
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
-  ],
-
+  axios: {},
+  /*
+   ** Router configuration
+   */
   router: {
     linkExactActiveClass: 'lbz-is-activated',
     scrollBehavior(to, from, savedPosition) {
@@ -126,15 +136,20 @@ export default {
     }
   },
   /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
+   ** Generate configuration
    */
-  axios: {},
+  generate: {
+    fallback: true, // if you want to use '404.html' instead of the default '200.html'
+    interval: 100
+  },
   /*
    ** Build configuration
    */
   build: {
+    transpile: ['@lbzui/vue'],
     postcss: {
+      // Add plugin names as key and arguments as value
+      // Install them before as dependencies with npm or yarn
       plugins: {
         'postcss-pxtorem': {
           unitPrecision: 8,
@@ -142,25 +157,24 @@ export default {
         }
       },
       preset: {
-        'postcss-preset-env': {
-          stage: 3,
-          autoprefixer: {
-            flexbox: 'no-2009',
-            grid: 'no-autoplace'
-          },
-          importFrom: ['./assets/css/lbzui/variables.css']
-        }
+        // Change the postcss-preset-env settings
+        stage: 3,
+        autoprefixer: {
+          flexbox: 'no-2009',
+          grid: 'no-autoplace'
+        },
+        importFrom: ['./assets/css/lbzui/variables.css']
       }
     },
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
+    extend(config, { isDev, isClient }) {
       // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
+      if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(js|vue)$/,
+          test: /\.(ts|js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })

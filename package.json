@@ -5,16 +5,18 @@
   "author": "LAN Bizhong <bizhong_lan@163.com> (https://lanbizhong.com/)",
   "private": true,
   "scripts": {
-    "dev": "nuxt --open",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "nuxt-ts --open",
+    "build": "nuxt-ts build",
+    "build:analyze": "nuxt-ts build --analyze",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lintfix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
   "dependencies": {
     "@lbzui/vue": "^0.5.1",
+    "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
     "nuxt": "^2.0.0"
@@ -25,7 +27,6 @@
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/style-resources": "^1.0.0",
-    "@types/webpack-hot-middleware": "^2.25.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.10.0",
