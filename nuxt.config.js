@@ -1,4 +1,12 @@
-process.env.npm_package_name = 'LAN Bizhong'
+const SITE_NAME = 'LAN Bizhong'
+const SITE_DESCRIPTION = "LAN Bizhong's personal website"
+const SITE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://lanbizhong.com'
+    : 'http://localhost:3000'
+
+process.env.npm_package_name = SITE_NAME
+process.env.npm_package_description = SITE_DESCRIPTION
 
 export default {
   mode: 'universal',
@@ -11,7 +19,7 @@ export default {
       dir: 'ltr',
       prefix: 'og: http://ogp.me/ns#'
     },
-    title: process.env.npm_package_name,
+    title: SITE_NAME,
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
@@ -19,7 +27,7 @@ export default {
       {
         name: 'viewport',
         content:
-          'width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover'
+          'width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover'
       },
       { name: 'renderer', content: 'webkit' },
       { name: 'x5-orientation', content: 'portrait' },
@@ -32,35 +40,45 @@ export default {
       { name: 'nightmode', content: 'disable' },
       { name: 'layoutmode', content: 'fitscreen' },
       { name: 'wap-font-scale', content: 'no' },
-      { name: 'application-name', content: process.env.npm_package_name },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
-      },
+      { name: 'application-name', content: SITE_NAME },
+      { hid: 'description', name: 'description', content: SITE_DESCRIPTION },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
       { name: 'format-detection', content: 'telephone=no' },
-      { name: 'apple-mobile-web-app-capable', content: 'yes' },
-      {
-        hid: 'apple-mobile-web-app-status-bar-style',
-        name: 'apple-mobile-web-app-status-bar-style',
-        content: 'default'
-      },
-      { name: 'msapplication-tap-highlight', content: 'no' }
+      { name: 'msapplication-tooltip', content: SITE_NAME },
+      { name: 'msapplication-starturl', content: `${SITE_URL}/` },
+      { name: 'msapplication-tap-highlight', content: 'no' },
+      { itemprop: 'name', content: SITE_NAME },
+      { itemprop: 'description', content: SITE_DESCRIPTION },
+      { itemprop: 'image', content: `${SITE_URL}/icon.png` }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'preconnect', href: 'https://www.google-analytics.com' },
       {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap|Material+Icons&display=block'
+      },
+      { rel: 'canonical', href: `${SITE_URL}/` }
+    ],
+    script: [
+      {
+        src: 'https://hm.baidu.com/hm.js?5d25fff5fe2d57f369a0391ee2a2b8e6',
+        async: true,
+        defer: true
       }
     ],
     bodyAttrs: {
       ontouchstart: ''
     }
+  },
+  /*
+   ** Env configuration
+   */
+  env: {
+    SITE_NAME,
+    SITE_DESCRIPTION,
+    SITE_URL
   },
   /*
    ** Customize the progress-bar color
@@ -73,13 +91,19 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/lbzui.ts'],
+  plugins: ['~/plugins/lbzui.js'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/style-resources',
+    [
+      '@nuxtjs/browserconfig',
+      {
+        TileColor: '#1a73e8',
+        square150x150logo: { '@': { src: 'icon.png' } }
+      }
+    ],
     [
       '@nuxtjs/google-analytics',
       {
@@ -89,15 +113,8 @@ export default {
           sendHitTask: true
         }
       }
-    ]
-  ],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    ],
+    '@nuxtjs/style-resources'
   ],
   /*
    ** Style Resources module configuration
@@ -106,6 +123,7 @@ export default {
   styleResources: {
     less: [
       // variables
+      // './node_modules/@lbzui/vue/src/assets/css/variables/_*.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_elevation.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_layout-grid.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_motion.less',
@@ -118,22 +136,48 @@ export default {
     ]
   },
   /*
+   ** Nuxt.js modules
+   */
+  modules: [
+    // Doc: https://axios.nuxtjs.org/usage
+    '@nuxtjs/axios',
+    '@nuxtjs/pwa'
+  ],
+  /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
   /*
+   ** PWA module configuration
+   ** See https://pwa.nuxtjs.org/
+   */
+  pwa: {
+    workbox: {
+      offlineAnalytics: true,
+      workboxExtensions: '~/plugins/workbox/workbox.js',
+      cachingExtensions: '~/plugins/workbox/caching.js',
+      routingExtensions: '~/plugins/workbox/routing.js'
+    },
+    meta: {
+      mobileAppIOS: true,
+      appleStatusBarStyle: 'default',
+      ogHost: SITE_URL,
+      ogUrl: `${SITE_URL}/`,
+      twitterCard: 'summary',
+      twitterSite: '@lanbizhong',
+      twitterCreator: '@lanbizhong'
+    },
+    manifest: {
+      dir: 'ltr',
+      orientation: 'portrait'
+    }
+  },
+  /*
    ** Router configuration
    */
   router: {
-    linkExactActiveClass: 'lbz-is-activated',
-    scrollBehavior(to, from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition
-      } else {
-        return { x: 0, y: 0 }
-      }
-    }
+    linkExactActiveClass: 'lbz-is-activated'
   },
   /*
    ** Generate configuration
