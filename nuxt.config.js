@@ -57,7 +57,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap|Material+Icons&display=block'
+          'https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i&display=swap'
       },
       { rel: 'canonical', href: `${SITE_URL}/` }
     ],
@@ -114,7 +114,8 @@ export default {
         }
       }
     ],
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    '@nuxtjs/svg'
   ],
   /*
    ** Style Resources module configuration
