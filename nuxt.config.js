@@ -22,6 +22,7 @@ export default {
     title: SITE_NAME,
     meta: [
       { charset: 'utf-8' },
+      { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge,chrome=1' },
       { 'http-equiv': 'Cache-Control', content: 'no-siteapp' },
       {
@@ -41,25 +42,35 @@ export default {
       { name: 'layoutmode', content: 'fitscreen' },
       { name: 'wap-font-scale', content: 'no' },
       { name: 'application-name', content: SITE_NAME },
-      { hid: 'description', name: 'description', content: SITE_DESCRIPTION },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
+      { name: 'google', content: 'notranslate' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tooltip', content: SITE_NAME },
       { name: 'msapplication-starturl', content: `${SITE_URL}/` },
       { name: 'msapplication-tap-highlight', content: 'no' },
-      { itemprop: 'name', content: SITE_NAME },
-      { itemprop: 'description', content: SITE_DESCRIPTION },
-      { itemprop: 'image', content: `${SITE_URL}/icon.png` }
+      { hid: 'name', itemprop: 'name', content: SITE_NAME },
+      {
+        hid: 'description',
+        name: 'description',
+        itemprop: 'description',
+        content: SITE_DESCRIPTION
+      },
+      { hid: 'image', itemprop: 'image', content: `${SITE_URL}/icon.png` }
     ],
     link: [
+      { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
+      { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+      { rel: 'preconnect', href: 'https://hm.baidu.com' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i&display=swap'
       },
-      { rel: 'canonical', href: `${SITE_URL}/` }
+      { hid: 'canonical', rel: 'canonical', href: `${SITE_URL}/` }
     ],
     script: [
       {
@@ -126,12 +137,16 @@ export default {
       // variables
       // './node_modules/@lbzui/vue/src/assets/css/variables/_*.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_elevation.less',
-      './node_modules/@lbzui/vue/src/assets/css/variables/_layout-grid.less',
+      // './node_modules/@lbzui/vue/src/assets/css/variables/_layout-grid.less',
+      './assets/css/lbzui/_layout-grid.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_motion.less',
-      './node_modules/@lbzui/vue/src/assets/css/variables/_shape.less',
+      // './node_modules/@lbzui/vue/src/assets/css/variables/_shape.less',
+      './assets/css/lbzui/_shape.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_state.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_surface.less',
+      // './node_modules/@lbzui/vue/src/assets/css/variables/_theme.less',
       './assets/css/lbzui/_theme.less',
+
       // mixins
       './node_modules/@lbzui/vue/src/assets/css/utilities/_*.less'
     ]
@@ -156,13 +171,13 @@ export default {
   pwa: {
     workbox: {
       offlineAnalytics: true,
-      workboxExtensions: '~/plugins/workbox/workbox.js',
-      cachingExtensions: '~/plugins/workbox/caching.js',
-      routingExtensions: '~/plugins/workbox/routing.js'
+      workboxExtensions: '~/plugins/pwa/workbox.js',
+      cachingExtensions: '~/plugins/pwa/caching.js',
+      routingExtensions: '~/plugins/pwa/routing.js'
     },
     meta: {
       mobileAppIOS: true,
-      appleStatusBarStyle: 'default',
+      theme_color: '#121212',
       ogHost: SITE_URL,
       ogUrl: `${SITE_URL}/`,
       twitterCard: 'summary',

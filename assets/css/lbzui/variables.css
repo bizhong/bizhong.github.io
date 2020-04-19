@@ -8,8 +8,8 @@
 
   /* Shape */
   --lbz-shape-size-small: 4px;
-  --lbz-shape-size-medium: 4px;
-  --lbz-shape-size-large: 0;
+  --lbz-shape-size-medium: 8px;
+  --lbz-shape-size-large: 24px;
 
   /* Surface */
   --lbz-surface-0: #fff;

@@ -1,141 +1,195 @@
 <template>
-  <client-only>
-    <lbz-backdrop
-      class="backdrop"
-      :active.sync="visActive"
-      background="dark"
-      scrim
-    >
-      <template #back-start>
-        <lbz-top-app-bar background="dark" :title="cgetTitle" role="banner">
-          <template #start>
-            <lbz-icon-button
-              on-background="dark"
-              darkened
-              :title="cisHomePage ? 'Refresh' : 'Back'"
-              @click.stop="fgoBack"
+  <lbz-backdrop
+    class="backdrop"
+    :active.sync="isActive"
+    background="dark"
+    scrim
+  >
+    <template #back-start>
+      <lbz-top-app-bar background="dark" :title="getTitle" role="banner">
+        <template #start>
+          <lbz-icon-button
+            on-background="dark"
+            darkened
+            :title="isHomePage ? 'Refresh' : 'Back'"
+            @click.stop="back"
+          >
+            <IconLogo v-if="isHomePage" />
+            <IconArrowBack v-else />
+          </lbz-icon-button>
+        </template>
+        <template #center>
+          <lbz-tab
+            router-link
+            item-tag="a"
+            align="center"
+            on-background="dark"
+            on-content
+            role="navigation"
+          >
+            <lbz-tab-item
+              v-for="item of NAVIGATION"
+              :key="item.label"
+              :to="item.to"
+              >{{ item.label }}</lbz-tab-item
             >
-              <IconLogo v-if="cisHomePage" />
-              <IconArrowBack v-else />
-            </lbz-icon-button>
-          </template>
-          <template #center>
-            <lbz-tab
-              router-link
-              item-tag="a"
-              align="center"
-              on-background="dark"
-              on-content
-              role="navigation"
-            >
-              <lbz-tab-item to="/">Home</lbz-tab-item>
-              <lbz-tab-item to="/articles">Articles</lbz-tab-item>
-            </lbz-tab>
-          </template>
-          <template #end>
-            <lbz-icon-button
-              :active.sync="visActive"
-              on-background="dark"
-              darkened
-              title="Toggle menu"
-            >
-              <template #on-icon>
-                <IconClose />
-              </template>
-              <template #off-icon>
-                <IconMenu />
-              </template>
-            </lbz-icon-button>
-            <lbz-icon-button
-              on-background="dark"
-              darkened
-              title="Refresh"
-              @click.stop="frefresh"
-              ><IconRefresh
-            /></lbz-icon-button>
-          </template>
-        </lbz-top-app-bar>
-      </template>
-      <template #back-center>
-        <!-- Navigation -->
-        <lbz-list
-          tag="nav"
-          router-link
-          item-tag="a"
-          on-background="dark"
-          darkened
-          nav
-          role="navigation"
+          </lbz-tab>
+        </template>
+        <template #end>
+          <lbz-icon-button
+            :active.sync="isActive"
+            on-background="dark"
+            darkened
+            title="Toggle menu"
+          >
+            <template #on-icon>
+              <IconClose />
+            </template>
+            <template #off-icon>
+              <IconMenu />
+            </template>
+          </lbz-icon-button>
+          <lbz-icon-button
+            on-background="dark"
+            darkened
+            title="Refresh"
+            @click.stop="refresh"
+            ><IconRefresh
+          /></lbz-icon-button>
+        </template>
+      </lbz-top-app-bar>
+    </template>
+    <template #back-center>
+      <!-- Navigation -->
+      <lbz-list
+        tag="nav"
+        router-link
+        item-tag="a"
+        on-background="dark"
+        darkened
+        nav
+        role="navigation"
+      >
+        <lbz-list-item
+          v-for="item of NAVIGATION"
+          :key="item.label"
+          :to="item.to"
+          >{{ item.label }}</lbz-list-item
         >
-          <lbz-list-item to="/">Home</lbz-list-item>
-          <lbz-list-item to="/articles">Articles</lbz-list-item>
-        </lbz-list>
+      </lbz-list>
 
-        <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" darkened />
 
-        <!-- Settings -->
+      <!-- Settings -->
+      <client-only placeholder="Loading...">
         <lbz-list
           type="two-line"
           on-background="dark"
           darkened
           subtitle="Settings"
         >
-          <lbz-list-item>
-            <span class="lbz-list-item__title">Language</span>
-            <span class="lbz-list-item__subtitle">English</span>
-          </lbz-list-item>
-          <lbz-list-item>
-            <span class="lbz-list-item__title">Theme</span>
-            <span class="lbz-list-item__subtitle">System default</span>
+          <lbz-list-item
+            v-for="(item, index) of filter(SETTINGS)"
+            :key="index"
+            @click.stop="settings(index)"
+          >
+            <span class="lbz-list-item__title">{{ item.title }}</span>
+            <span class="lbz-list-item__subtitle">{{ subtitle(index) }}</span>
           </lbz-list-item>
         </lbz-list>
+      </client-only>
 
-        <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" darkened />
 
-        <!-- Communities -->
-        <lbz-list
-          tag="nav"
-          item-tag="a"
-          on-background="dark"
-          darkened
-          subtitle="Communities"
+      <!-- Communities -->
+      <lbz-list
+        tag="nav"
+        item-tag="a"
+        on-background="dark"
+        darkened
+        subtitle="Communities"
+      >
+        <lbz-list-item
+          v-for="(item, index) of COMMUNITIES"
+          :key="index"
+          :href="item.href"
+          target="_blank"
+          >{{ item.label }}</lbz-list-item
         >
-          <lbz-list-item href="https://github.com/bizhong" target="_blank"
-            >GitHub</lbz-list-item
-          >
-          <lbz-list-item
-            href="https://juejin.im/user/5acce57b5188255c93239e72/posts"
-            target="_blank"
-            >掘金</lbz-list-item
-          >
-          <lbz-list-item
-            href="https://zhuanlan.zhihu.com/bizhong"
-            target="_blank"
-            >知乎专栏</lbz-list-item
-          >
-          <lbz-list-item
-            href="https://www.jianshu.com/u/9281723851d6"
-            target="_blank"
-            >简书</lbz-list-item
-          >
-          <lbz-list-item class="lbz-state-no-before--descendant"
-            >微信订阅号</lbz-list-item
-          >
-        </lbz-list>
+        <lbz-list-item class="lbz-state-no-before--descendant">
+          <img
+            src="~/assets/img/wechat-qrcode.jpg"
+            width="172px"
+            height="172px"
+            title="微信订阅号"
+            alt="兰必钟个人订阅号"
+          />
+        </lbz-list-item>
+      </lbz-list>
 
-        <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" darkened />
 
-        <p>© {{ new Date().getFullYear() }} LAN Bizhong</p>
-      </template>
-      <template #front-center>
-        <nuxt keep-alive :keep-alive-props="{ max: 10 }" role="main" />
-      </template>
-    </lbz-backdrop>
-  </client-only>
+      <p>© {{ new Date().getFullYear() }} LAN Bizhong</p>
+    </template>
+    <template #front-center>
+      <nuxt keep-alive :keep-alive-props="{ max: 10 }" role="main" />
+
+      <!-- Dialog -->
+      <lbz-dialog
+        :active.sync="dialog.language.active"
+        type="simple"
+        :title="dialog.language.title"
+        append-to-body
+      >
+        <template #center>
+          <lbz-list dense>
+            <lbz-list-item
+              v-for="(item, index) of dialog.language.content"
+              :key="index"
+              @click.stop="setLanguage(index)"
+            >
+              <template #start>
+                <lbz-radio v-model="dialog.language.radio" :value="index" />
+              </template>
+              <template #center>{{ item }}</template>
+            </lbz-list-item>
+          </lbz-list>
+        </template>
+      </lbz-dialog>
+      <lbz-dialog
+        :active.sync="dialog.theme.active"
+        type="simple"
+        :title="dialog.theme.title"
+        append-to-body
+      >
+        <template #center>
+          <lbz-list dense>
+            <lbz-list-item
+              v-for="(item, index) of dialog.theme.content"
+              :key="index"
+              @click.stop="setTheme(index)"
+            >
+              <template #start>
+                <lbz-radio v-model="dialog.theme.radio" :value="index" />
+              </template>
+              <template #center>{{ item }}</template>
+            </lbz-list-item>
+          </lbz-list>
+        </template>
+      </lbz-dialog>
+    </template>
+  </lbz-backdrop>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import {
+  lbzfCancelContextmenu,
+  lbzfChangeModeHandler,
+  lbzfIsDarkModeEnabled,
+  lbzfSupportsCssVariables
+} from '@lbzui/vue/src/utils/funcs'
+
 import IconLogo from '~/assets/img/icon/layers.svg?inline'
 import IconArrowBack from '~/assets/img/icon/arrow_back.svg?inline'
 import IconClose from '~/assets/img/icon/close.svg?inline'
@@ -152,44 +206,179 @@ export default Vue.extend({
   },
 
   data: () => ({
-    visActive: false
+    NAVIGATION: [
+      {
+        to: '/',
+        label: 'Home'
+      },
+      {
+        to: '/articles',
+        label: 'Articles'
+      }
+    ],
+    SETTINGS: [
+      {
+        title: 'Language',
+        subtitle: ['English', '简体中文']
+      },
+      {
+        title: 'Theme',
+        subtitle: ['System default', 'Light', 'Dark']
+      }
+    ],
+    COMMUNITIES: [
+      {
+        href: 'https://github.com/bizhong',
+        label: 'GitHub'
+      },
+      {
+        href: 'https://juejin.im/user/5acce57b5188255c93239e72/posts',
+        label: '掘金'
+      },
+      {
+        href: 'https://zhuanlan.zhihu.com/bizhong',
+        label: '知乎专栏'
+      },
+      {
+        href: 'https://www.jianshu.com/u/9281723851d6',
+        label: '简书'
+      }
+    ],
+
+    supportsCssVars: lbzfSupportsCssVariables(),
+    isActive: false,
+
+    dialog: {
+      language: {
+        active: false,
+        radio: 0,
+        title: 'Choose language',
+        content: ['English', '简体中文']
+      },
+      theme: {
+        active: false,
+        radio: 0,
+        title: 'Choose theme',
+        content: ['System default', 'Light', 'Dark']
+      }
+    }
   }),
 
   computed: {
-    cisHomePage(): boolean {
+    isHomePage(): boolean {
       return this.$route.name === 'index'
     },
 
-    cgetTitle(): string {
-      const name = this.$route.name
+    getTitle(): string {
+      const name: string = this.$route.name || ''
 
-      if (!name) {
-        return '404'
-      } else {
-        return name === 'index' ? 'home' : name
-      }
+      return !name
+        ? '404'
+        : name === 'index'
+        ? process.env.SITE_NAME || ''
+        : name
     }
   },
 
   watch: {
     '$route.name'(): void {
-      if (this.visActive) {
-        this.visActive = false
+      if (this.isActive) {
+        this.isActive = false
       }
     }
   },
 
+  mounted(): void {
+    const language: number = Number(localStorage.getItem('LANGUAGE'))
+    this.setLanguage(language)
+
+    if (this.supportsCssVars) {
+      const theme: number = Number(localStorage.getItem('THEME'))
+      this.setTheme(theme)
+      lbzfChangeModeHandler(this.setTheme)
+    }
+
+    lbzfCancelContextmenu()
+  },
+
   methods: {
-    fgoBack(): void {
-      if (this.cisHomePage) {
-        this.frefresh()
-      } else {
-        window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    back(): void {
+      this.isHomePage
+        ? this.refresh()
+        : window.history.length > 1
+        ? this.$router.go(-1)
+        : this.$router.push('/')
+    },
+
+    refresh(): void {
+      window.location.reload()
+    },
+
+    filter(arr: any[]): any[] {
+      const newArr: any[] = JSON.parse(JSON.stringify(arr))
+
+      if (!this.supportsCssVars) {
+        newArr.splice(1)
+      }
+
+      return newArr
+    },
+
+    settings(i: number): void {
+      !i ? this.openLanguage() : this.openTheme()
+    },
+
+    subtitle(i: number): string {
+      const radio: number = this.dialog[!i ? 'language' : 'theme'].radio
+
+      return this.SETTINGS[i].subtitle[radio]
+    },
+
+    openLanguage(): void {
+      this.dialog.language.active = true
+    },
+
+    setLanguage(i: number): void {
+      const _language: any = this.dialog.language
+
+      _language.radio = i
+
+      if (_language.active) {
+        _language.active = false
+        localStorage.setItem('LANGUAGE', String(i))
       }
     },
 
-    frefresh(): void {
-      window.location.reload()
+    openTheme(): void {
+      if (this.supportsCssVars) {
+        this.dialog.theme.active = true
+      }
+    },
+
+    setTheme(i?: number): void {
+      const _theme: any = this.dialog.theme
+      let isDark: boolean = false
+
+      if (i !== undefined) {
+        _theme.radio = i
+
+        if (_theme.active) {
+          _theme.active = false
+          localStorage.setItem('THEME', String(i))
+        }
+
+        isDark = !i ? lbzfIsDarkModeEnabled() : i === 2
+        document.documentElement.setAttribute(
+          'data-lbz-theme',
+          isDark ? 'dark' : 'light'
+        )
+      } else if (i === undefined && !_theme.radio) {
+        isDark = lbzfIsDarkModeEnabled()
+        document.documentElement.setAttribute(
+          'data-lbz-theme',
+          isDark ? 'dark' : 'light'
+        )
+      }
     }
   }
 })
@@ -206,43 +395,56 @@ body {
   color: var(--lbz-theme-text-medium-emphasis-on-surface);
 }
 
+.lbz-top-app-bar {
+  text-transform: capitalize;
+}
+
 .lbz-backdrop.backdrop {
-  .lbz-top-app-bar {
-    .lbz-top-app-bar__title {
-      flex: none;
-      width: 360px / 2 - 4px - 56px - 12px;
-      text-transform: capitalize;
-    }
-
-    .lbz-top-app-bar__end {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
-      align-items: center;
-      width: 360px / 2 - 12px - 4px;
-    }
-  }
-
-  .lbz-tab {
-    flex: 1;
-
-    .lbz-tab-item {
-      .lbz-typography('subtitle1');
-    }
-
-    .lbz-tab-item__indicator {
-      border-top-width: 3px;
-      border-radius: 3px 3px 0 0;
-    }
-  }
-
-  .lbz-list {
-    &.lbz-is-nav {
+  .lbz-backdrop__back-layer {
+    .lbz-tab {
       display: none;
+      flex: 1;
+
+      .lbz-tab-item {
+        .lbz-typography('body1');
+      }
+
+      .lbz-tab-item__indicator {
+        border-top-width: 3px;
+        border-radius: 3px 3px 0 0;
+      }
     }
 
-    &:not(.lbz-is-nav) {
-      margin: 0 -16px;
+    .lbz-list:not(.lbz-is-nav) {
+      margin-right: -16px;
+      margin-left: -16px;
+    }
+
+    @media #lbz-layout-grid.breakpoint[desktop] {
+      .lbz-top-app-bar__title {
+        flex: none;
+        width: 480px / 2 - 2 * 12px - 56px;
+      }
+
+      .lbz-tab {
+        display: block;
+      }
+
+      .lbz-top-app-bar__end {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: flex-end;
+        align-items: center;
+        width: 480px / 2 - 2 * 12px;
+      }
+
+      .lbz-list.lbz-is-nav {
+        display: none;
+
+        + .lbz-divider {
+          display: none;
+        }
+      }
     }
   }
 
@@ -251,23 +453,15 @@ body {
   }
 
   @media #lbz-layout-grid.breakpoint[mobile] {
-    .lbz-tab {
-      display: none;
-    }
-
-    .lbz-list.lbz-is-nav {
-      display: block;
-    }
-
     @supports (top: env(safe-area-inset-top)) {
       @headerHeight: ~'56px + env(safe-area-inset-top)';
 
       .lbz-backdrop__back-layer__header {
         height: calc(@headerHeight);
-      }
 
-      .lbz-top-app-bar {
-        top: env(safe-area-inset-top);
+        .lbz-top-app-bar {
+          top: env(safe-area-inset-top);
+        }
       }
 
       .lbz-backdrop__front-layer {
