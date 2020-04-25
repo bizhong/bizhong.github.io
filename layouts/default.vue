@@ -1,9 +1,11 @@
 <template>
   <lbz-backdrop
-    class="backdrop"
+    ref="backdrop"
+    class="layout--default"
     :active.sync="isActive"
     background="dark"
     scrim
+    @scroll="scroll"
   >
     <template #back-start>
       <lbz-top-app-bar background="dark" :title="getTitle" role="banner">
@@ -18,7 +20,7 @@
             <IconArrowBack v-else />
           </lbz-icon-button>
         </template>
-        <template #center>
+        <!-- <template #center>
           <lbz-tab
             router-link
             item-tag="a"
@@ -34,7 +36,7 @@
               >{{ item.label }}</lbz-tab-item
             >
           </lbz-tab>
-        </template>
+        </template> -->
         <template #end>
           <lbz-icon-button
             :active.sync="isActive"
@@ -61,7 +63,7 @@
     </template>
     <template #back-center>
       <!-- Navigation -->
-      <lbz-list
+      <!-- <lbz-list
         tag="nav"
         router-link
         item-tag="a"
@@ -78,7 +80,7 @@
         >
       </lbz-list>
 
-      <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" darkened /> -->
 
       <!-- Settings -->
       <client-only placeholder="Loading...">
@@ -86,15 +88,18 @@
           type="two-line"
           on-background="dark"
           darkened
-          subtitle="Settings"
+          subheader="Settings"
         >
           <lbz-list-item
-            v-for="(item, index) of filter(SETTINGS)"
+            v-for="(item, index) of SETTINGS"
             :key="index"
-            @click.stop="settings(index)"
+            :disabled="!supportsCssVars"
+            @click.stop="handleSettings(index)"
           >
             <span class="lbz-list-item__title">{{ item.title }}</span>
-            <span class="lbz-list-item__subtitle">{{ subtitle(index) }}</span>
+            <span class="lbz-list-item__subtitle">{{
+              getSubtitle(index)
+            }}</span>
           </lbz-list-item>
         </lbz-list>
       </client-only>
@@ -107,21 +112,24 @@
         item-tag="a"
         on-background="dark"
         darkened
-        subtitle="Communities"
+        subheader="Communities"
       >
         <lbz-list-item
           v-for="(item, index) of COMMUNITIES"
           :key="index"
           :href="item.href"
           target="_blank"
-          >{{ item.label }}</lbz-list-item
         >
+          <template #center>{{ item.label }}</template>
+          <template #end
+            ><lbz-icon><IconOpenInNew /></lbz-icon
+          ></template>
+        </lbz-list-item>
         <lbz-list-item class="lbz-state-no-before--descendant">
           <img
             src="~/assets/img/wechat-qrcode.jpg"
             width="172px"
             height="172px"
-            title="微信订阅号"
             alt="兰必钟个人订阅号"
           />
         </lbz-list-item>
@@ -132,47 +140,61 @@
       <p>© {{ new Date().getFullYear() }} LAN Bizhong</p>
     </template>
     <template #front-center>
+      <!-- Page -->
       <nuxt keep-alive :keep-alive-props="{ max: 10 }" role="main" />
 
-      <!-- Dialog -->
-      <lbz-dialog
-        :active.sync="dialog.language.active"
+      <!-- Back to top -->
+      <lbz-fab :inactive="isExited" @click.stop="backToTop">
+        <IconKeyboardArrowUp />
+      </lbz-fab>
+
+      <!-- Dialogs -->
+      <!-- <lbz-dialog
+        :active.sync="dialogs.language.active"
         type="simple"
-        :title="dialog.language.title"
+        :title="dialogs.language.title"
         append-to-body
       >
         <template #center>
           <lbz-list dense>
             <lbz-list-item
-              v-for="(item, index) of dialog.language.content"
+              v-for="(item, index) of SETTINGS[0].items"
               :key="index"
-              @click.stop="setLanguage(index)"
+              @click.stop="setLanguage(item.value)"
             >
               <template #start>
-                <lbz-radio v-model="dialog.language.radio" :value="index" />
+                <lbz-radio
+                  v-model="language"
+                  :value="item.value"
+                  @change="setLanguage"
+                />
               </template>
-              <template #center>{{ item }}</template>
+              <template #center>{{ item.label }}</template>
             </lbz-list-item>
           </lbz-list>
         </template>
-      </lbz-dialog>
+      </lbz-dialog> -->
       <lbz-dialog
-        :active.sync="dialog.theme.active"
+        :active.sync="dialogs.theme.active"
         type="simple"
-        :title="dialog.theme.title"
+        :title="dialogs.theme.title"
         append-to-body
       >
         <template #center>
           <lbz-list dense>
             <lbz-list-item
-              v-for="(item, index) of dialog.theme.content"
+              v-for="(item, index) of SETTINGS[0].items"
               :key="index"
-              @click.stop="setTheme(index)"
+              @click.stop="setTheme(item.value)"
             >
               <template #start>
-                <lbz-radio v-model="dialog.theme.radio" :value="index" />
+                <lbz-radio
+                  v-model="theme"
+                  :value="item.value"
+                  @change="setTheme"
+                />
               </template>
-              <template #center>{{ item }}</template>
+              <template #center>{{ item.label }}</template>
             </lbz-list-item>
           </lbz-list>
         </template>
@@ -189,12 +211,15 @@ import {
   lbzfIsDarkModeEnabled,
   lbzfSupportsCssVariables
 } from '@lbzui/vue/src/utils/funcs'
+import { VueScrollPosition } from '@lbzui/vue/types'
 
 import IconLogo from '~/assets/img/icon/layers.svg?inline'
 import IconArrowBack from '~/assets/img/icon/arrow_back.svg?inline'
 import IconClose from '~/assets/img/icon/close.svg?inline'
 import IconMenu from '~/assets/img/icon/menu.svg?inline'
 import IconRefresh from '~/assets/img/icon/refresh.svg?inline'
+import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
+import IconKeyboardArrowUp from '~/assets/img/icon/keyboard_arrow_up.svg?inline'
 
 export default Vue.extend({
   components: {
@@ -202,28 +227,56 @@ export default Vue.extend({
     IconArrowBack,
     IconClose,
     IconMenu,
-    IconRefresh
+    IconRefresh,
+    IconOpenInNew,
+    IconKeyboardArrowUp
   },
 
   data: () => ({
-    NAVIGATION: [
-      {
-        to: '/',
-        label: 'Home'
-      },
-      {
-        to: '/articles',
-        label: 'Articles'
-      }
-    ],
+    // NAVIGATION: [
+    //   {
+    //     to: '/',
+    //     label: 'Home'
+    //   },
+    //   {
+    //     to: '/articles',
+    //     label: 'Articles'
+    //   }
+    // ],
     SETTINGS: [
-      {
-        title: 'Language',
-        subtitle: ['English', '简体中文']
-      },
+      // {
+      //   title: 'Language',
+      //   items: [
+      //     {
+      //       value: 'en',
+      //       label: 'English'
+      //     },
+      //     {
+      //       value: 'sc',
+      //       label: '简体中文'
+      //     },
+      //     {
+      //       value: 'tc',
+      //       label: '繁體中文'
+      //     }
+      //   ]
+      // },
       {
         title: 'Theme',
-        subtitle: ['System default', 'Light', 'Dark']
+        items: [
+          {
+            value: 'system',
+            label: 'System default'
+          },
+          {
+            value: 'light',
+            label: 'Light'
+          },
+          {
+            value: 'dark',
+            label: 'Dark'
+          }
+        ]
       }
     ],
     COMMUNITIES: [
@@ -232,12 +285,12 @@ export default Vue.extend({
         label: 'GitHub'
       },
       {
-        href: 'https://juejin.im/user/5acce57b5188255c93239e72/posts',
-        label: '掘金'
-      },
-      {
         href: 'https://zhuanlan.zhihu.com/bizhong',
         label: '知乎专栏'
+      },
+      {
+        href: 'https://juejin.im/user/5acce57b5188255c93239e72/posts',
+        label: '掘金'
       },
       {
         href: 'https://www.jianshu.com/u/9281723851d6',
@@ -245,21 +298,21 @@ export default Vue.extend({
       }
     ],
 
-    supportsCssVars: lbzfSupportsCssVariables(),
+    supportsCssVars: false,
+    // language: 'en',
+    theme: 'system',
+    isDark: false,
     isActive: false,
+    isExited: true,
 
-    dialog: {
-      language: {
-        active: false,
-        radio: 0,
-        title: 'Choose language',
-        content: ['English', '简体中文']
-      },
+    dialogs: {
+      // language: {
+      //   active: false,
+      //   title: 'Choose language'
+      // },
       theme: {
         active: false,
-        radio: 0,
-        title: 'Choose theme',
-        content: ['System default', 'Light', 'Dark']
+        title: 'Choose theme'
       }
     }
   }),
@@ -273,8 +326,8 @@ export default Vue.extend({
       const name: string = this.$route.name || ''
 
       return !name
-        ? '404'
-        : name === 'index'
+        ? 'error'
+        : this.isHomePage
         ? process.env.SITE_NAME || ''
         : name
     }
@@ -289,12 +342,11 @@ export default Vue.extend({
   },
 
   mounted(): void {
-    const language: number = Number(localStorage.getItem('LANGUAGE'))
-    this.setLanguage(language)
+    this.supportsCssVars = lbzfSupportsCssVariables()
+    // this.setLanguage(localStorage.getItem('LANGUAGE') || 'en')
 
     if (this.supportsCssVars) {
-      const theme: number = Number(localStorage.getItem('THEME'))
-      this.setTheme(theme)
+      this.setTheme(localStorage.getItem('THEME') || 'system')
       lbzfChangeModeHandler(this.setTheme)
     }
 
@@ -314,71 +366,68 @@ export default Vue.extend({
       window.location.reload()
     },
 
-    filter(arr: any[]): any[] {
-      const newArr: any[] = JSON.parse(JSON.stringify(arr))
+    // handleSettings(i: number): void {
+    //   this.dialogs[!i ? 'language' : 'theme'].active = true
+    // },
 
-      if (!this.supportsCssVars) {
-        newArr.splice(1)
-      }
-
-      return newArr
+    handleSettings(): void {
+      this.dialogs.theme.active = true
     },
 
-    settings(i: number): void {
-      !i ? this.openLanguage() : this.openTheme()
+    getSubtitle(i: number): string {
+      const _items: any[] = this.SETTINGS[i].items
+      // const value: string = !i ? this.language : this.theme
+      const value: string = this.theme
+      const index: number = _items.findIndex((val) => {
+        return val.value === value
+      })
+
+      return _items[index].label
     },
 
-    subtitle(i: number): string {
-      const radio: number = this.dialog[!i ? 'language' : 'theme'].radio
+    // setLanguage(val: string): void {
+    //   const _language: any = this.dialogs.language
 
-      return this.SETTINGS[i].subtitle[radio]
-    },
+    //   this.language = val
 
-    openLanguage(): void {
-      this.dialog.language.active = true
-    },
+    //   if (_language.active) {
+    //     localStorage.setItem('LANGUAGE', val)
+    //     _language.active = false
+    //   }
+    // },
 
-    setLanguage(i: number): void {
-      const _language: any = this.dialog.language
+    setTheme(val?: string): void {
+      const _theme: any = this.dialogs.theme
 
-      _language.radio = i
+      if (val !== undefined) {
+        this.theme = val
+        this.isDark =
+          val === 'system' ? lbzfIsDarkModeEnabled() : val === 'dark'
 
-      if (_language.active) {
-        _language.active = false
-        localStorage.setItem('LANGUAGE', String(i))
-      }
-    },
-
-    openTheme(): void {
-      if (this.supportsCssVars) {
-        this.dialog.theme.active = true
-      }
-    },
-
-    setTheme(i?: number): void {
-      const _theme: any = this.dialog.theme
-      let isDark: boolean = false
-
-      if (i !== undefined) {
-        _theme.radio = i
+        document.documentElement.setAttribute(
+          'data-lbz-theme',
+          this.isDark ? 'dark' : 'light'
+        )
 
         if (_theme.active) {
+          localStorage.setItem('THEME', val)
           _theme.active = false
-          localStorage.setItem('THEME', String(i))
         }
-
-        isDark = !i ? lbzfIsDarkModeEnabled() : i === 2
+      } else if (val === undefined && this.theme === 'system') {
+        this.isDark = lbzfIsDarkModeEnabled()
         document.documentElement.setAttribute(
           'data-lbz-theme',
-          isDark ? 'dark' : 'light'
-        )
-      } else if (i === undefined && !_theme.radio) {
-        isDark = lbzfIsDarkModeEnabled()
-        document.documentElement.setAttribute(
-          'data-lbz-theme',
-          isDark ? 'dark' : 'light'
+          this.isDark ? 'dark' : 'light'
         )
       }
+    },
+
+    scroll(el: HTMLElement, e: Event, position: VueScrollPosition): void {
+      this.isExited = !position.scrollTop
+    },
+
+    backToTop(): void {
+      ;(this.$refs.backdrop as any).$refs.scroller.scrollTop = 0
     }
   }
 })
@@ -399,57 +448,64 @@ body {
   text-transform: capitalize;
 }
 
-.lbz-backdrop.backdrop {
+.layout--default.lbz-backdrop {
   .lbz-backdrop__back-layer {
-    .lbz-tab {
-      display: none;
-      flex: 1;
+    // .lbz-tab {
+    //   display: none;
+    //   flex: 1;
 
-      .lbz-tab-item {
-        .lbz-typography('body1');
-      }
+    //   .lbz-tab-item {
+    //     .lbz-typography('body1');
+    //   }
 
-      .lbz-tab-item__indicator {
-        border-top-width: 3px;
-        border-radius: 3px 3px 0 0;
-      }
-    }
+    //   .lbz-tab-item__indicator {
+    //     border-top-width: 3px;
+    //     border-radius: 3px 3px 0 0;
+    //   }
+    // }
 
     .lbz-list:not(.lbz-is-nav) {
       margin-right: -16px;
       margin-left: -16px;
     }
 
-    @media #lbz-layout-grid.breakpoint[desktop] {
-      .lbz-top-app-bar__title {
-        flex: none;
-        width: 480px / 2 - 2 * 12px - 56px;
-      }
+    // @media #lbz-layout-grid.breakpoint[desktop] {
+    //   .lbz-top-app-bar__title {
+    //     flex: none;
+    //     width: 480px / 2 - 2 * 12px - 56px;
+    //   }
 
-      .lbz-tab {
-        display: block;
-      }
+    //   .lbz-tab {
+    //     display: block;
+    //   }
 
-      .lbz-top-app-bar__end {
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-end;
-        align-items: center;
-        width: 480px / 2 - 2 * 12px;
-      }
+    //   .lbz-top-app-bar__end {
+    //     display: flex;
+    //     flex-flow: row nowrap;
+    //     justify-content: flex-end;
+    //     align-items: center;
+    //     width: 480px / 2 - 2 * 12px;
+    //   }
 
-      .lbz-list.lbz-is-nav {
-        display: none;
+    //   .lbz-list.lbz-is-nav {
+    //     display: none;
 
-        + .lbz-divider {
-          display: none;
-        }
-      }
-    }
+    //     + .lbz-divider {
+    //       display: none;
+    //     }
+    //   }
+    // }
   }
 
   .lbz-backdrop__front-layer {
     border-top-right-radius: 0;
+
+    .lbz-fab {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      margin: var(--lbz-layout-grid-margin);
+    }
   }
 
   @media #lbz-layout-grid.breakpoint[mobile] {

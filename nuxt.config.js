@@ -12,6 +12,7 @@ export default {
   mode: 'universal',
   /*
    ** Headers of the page
+   ** See https://vue-meta.nuxtjs.org/api/#metainfo-properties
    */
   head: {
     htmlAttrs: {
@@ -44,7 +45,7 @@ export default {
       { name: 'application-name', content: SITE_NAME },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
-      { name: 'google', content: 'notranslate' },
+      // { name: 'google', content: 'notranslate' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tooltip', content: SITE_NAME },
       { name: 'msapplication-starturl', content: `${SITE_URL}/` },
@@ -68,7 +69,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i&display=swap'
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap'
       },
       { hid: 'canonical', rel: 'canonical', href: `${SITE_URL}/` }
     ],
@@ -136,16 +137,17 @@ export default {
     less: [
       // variables
       // './node_modules/@lbzui/vue/src/assets/css/variables/_*.less',
+
       './node_modules/@lbzui/vue/src/assets/css/variables/_elevation.less',
       // './node_modules/@lbzui/vue/src/assets/css/variables/_layout-grid.less',
-      './assets/css/lbzui/_layout-grid.less',
+      './assets/css/lbzui/_layout-grid.less', // your custom layout grid
       './node_modules/@lbzui/vue/src/assets/css/variables/_motion.less',
       // './node_modules/@lbzui/vue/src/assets/css/variables/_shape.less',
-      './assets/css/lbzui/_shape.less',
+      './assets/css/lbzui/_shape.less', // your custom shape
       './node_modules/@lbzui/vue/src/assets/css/variables/_state.less',
       './node_modules/@lbzui/vue/src/assets/css/variables/_surface.less',
       // './node_modules/@lbzui/vue/src/assets/css/variables/_theme.less',
-      './assets/css/lbzui/_theme.less',
+      './assets/css/lbzui/_theme.less', // your custom theme
 
       // mixins
       './node_modules/@lbzui/vue/src/assets/css/utilities/_*.less'
@@ -154,11 +156,7 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -166,7 +164,7 @@ export default {
   axios: {},
   /*
    ** PWA module configuration
-   ** See https://pwa.nuxtjs.org/
+   ** See https://pwa.nuxtjs.org/setup.html
    */
   pwa: {
     workbox: {
@@ -193,13 +191,14 @@ export default {
    ** Router configuration
    */
   router: {
+    // Globally configure `<router-link>` default active class for exact matches
     linkExactActiveClass: 'lbz-is-activated'
   },
   /*
    ** Generate configuration
    */
   generate: {
-    fallback: true, // if you want to use '404.html' instead of the default '200.html'
+    fallback: true, // If you want to use '404.html' instead of the default '200.html'
     interval: 100
   },
   /*
@@ -208,9 +207,10 @@ export default {
   build: {
     transpile: ['@lbzui/vue'],
     postcss: {
-      // Add plugin names as key and arguments as value
-      // Install them before as dependencies with npm or yarn
+      // Add plugin names as key and arguments as value,
+      // install them before as dependencies with npm or yarn
       plugins: {
+        // See https://github.com/cuth/postcss-pxtorem#options
         'postcss-pxtorem': {
           unitPrecision: 8,
           propList: ['font', 'font-size', 'line-height']
@@ -218,12 +218,16 @@ export default {
       },
       preset: {
         // Change the postcss-preset-env settings
+        // See https://github.com/csstools/postcss-preset-env#options
         stage: 3,
         autoprefixer: {
           flexbox: 'no-2009',
           grid: 'no-autoplace'
         },
-        importFrom: ['./assets/css/lbzui/variables.css']
+        importFrom: [
+          // './node_modules/@lbzui/vue/src/assets/css/variables/variables.css'
+          './assets/css/lbzui/variables.css' // your custom CSS Variables
+        ]
       }
     },
     /*

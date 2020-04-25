@@ -16,5 +16,6 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'after-used' }]
   }
 }
