@@ -1,5 +1,9 @@
 <template>
-  <lbz-empty-state class="page--error" title="Oops!" :subtitle="getSubtitle">
+  <lbz-empty-state
+    class="page-error"
+    title="¯\_(ツ)_/¯"
+    :subtitle="getSubtitle"
+  >
     <template #end>
       <lbz-button
         router-link
@@ -19,7 +23,7 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  name: 'Error',
+  name: 'PageError',
 
   props: {
     error: {
@@ -35,9 +39,16 @@ export default Vue.extend({
 
     getSubtitle(): string {
       return this.statusCode === 404
-        ? "We couldn't find the page you're looking for."
-        : 'Something went wrong.'
+        ? 'Oops, page was not found.'
+        : 'Oops, something went wrong.'
     }
   }
 })
 </script>
+
+<style lang="less">
+.page-error.lbz-empty-state .lbz-empty-state__title {
+  margin-bottom: 24px;
+  .lbz-typography('h4');
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <lbz-backdrop
     ref="backdrop"
-    class="layout--default"
+    class="layout-default"
     :active.sync="isActive"
     background="dark"
     scrim
@@ -12,7 +12,6 @@
         <template #start>
           <lbz-icon-button
             on-background="dark"
-            darkened
             :title="isHomePage ? 'Refresh' : 'Back'"
             @click.stop="back"
           >
@@ -41,7 +40,6 @@
           <lbz-icon-button
             :active.sync="isActive"
             on-background="dark"
-            darkened
             title="Toggle menu"
           >
             <template #on-icon>
@@ -53,11 +51,13 @@
           </lbz-icon-button>
           <lbz-icon-button
             on-background="dark"
-            darkened
             title="Refresh"
             @click.stop="refresh"
             ><IconRefresh
           /></lbz-icon-button>
+        </template>
+        <template #append>
+          <lbz-divider class="layout-default__separator" on-background="dark" />
         </template>
       </lbz-top-app-bar>
     </template>
@@ -68,7 +68,6 @@
         router-link
         item-tag="a"
         on-background="dark"
-        darkened
         nav
         role="navigation"
       >
@@ -80,16 +79,11 @@
         >
       </lbz-list>
 
-      <lbz-divider on-background="dark" darkened /> -->
+      <lbz-divider on-background="dark" /> -->
 
       <!-- Settings -->
       <client-only placeholder="Loading...">
-        <lbz-list
-          type="two-line"
-          on-background="dark"
-          darkened
-          subheader="Settings"
-        >
+        <lbz-list type="two-line" on-background="dark" subheader="Settings">
           <lbz-list-item
             v-for="(item, index) of SETTINGS"
             :key="index"
@@ -104,20 +98,20 @@
         </lbz-list>
       </client-only>
 
-      <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" />
 
       <!-- Communities -->
       <lbz-list
         tag="nav"
         item-tag="a"
         on-background="dark"
-        darkened
         subheader="Communities"
       >
         <lbz-list-item
           v-for="(item, index) of COMMUNITIES"
           :key="index"
           :href="item.href"
+          rel="nofollow"
           target="_blank"
         >
           <template #center>{{ item.label }}</template>
@@ -130,22 +124,32 @@
             src="~/assets/img/wechat-qrcode.jpg"
             width="172px"
             height="172px"
-            alt="兰必钟个人订阅号"
+            alt="兰必钟个人微信订阅号"
           />
         </lbz-list-item>
       </lbz-list>
 
-      <lbz-divider on-background="dark" darkened />
+      <lbz-divider on-background="dark" />
 
       <p>© {{ new Date().getFullYear() }} LAN Bizhong</p>
     </template>
     <template #front-center>
       <!-- Page -->
-      <nuxt keep-alive :keep-alive-props="{ max: 10 }" role="main" />
+      <nuxt
+        keep-alive
+        :keep-alive-props="{ max: 10 }"
+        class="layout-default__page"
+        role="main"
+      />
 
-      <!-- Back to top -->
-      <lbz-fab :inactive="isExited" @click.stop="backToTop">
-        <IconKeyboardArrowUp />
+      <!-- Scroll to top -->
+      <lbz-fab
+        background="surface"
+        :inactive="isExited"
+        title="Scroll to top"
+        @click.stop="scrollToTop"
+      >
+        <IconArrowUpward />
       </lbz-fab>
 
       <!-- Dialogs -->
@@ -166,6 +170,7 @@
                 <lbz-radio
                   v-model="language"
                   :value="item.value"
+                  color="primary"
                   @change="setLanguage"
                 />
               </template>
@@ -191,6 +196,7 @@
                 <lbz-radio
                   v-model="theme"
                   :value="item.value"
+                  color="primary"
                   @change="setTheme"
                 />
               </template>
@@ -219,9 +225,11 @@ import IconClose from '~/assets/img/icon/close.svg?inline'
 import IconMenu from '~/assets/img/icon/menu.svg?inline'
 import IconRefresh from '~/assets/img/icon/refresh.svg?inline'
 import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
-import IconKeyboardArrowUp from '~/assets/img/icon/keyboard_arrow_up.svg?inline'
+import IconArrowUpward from '~/assets/img/icon/arrow_upward.svg?inline'
 
 export default Vue.extend({
+  name: 'LayoutDefault',
+
   components: {
     IconLogo,
     IconArrowBack,
@@ -229,7 +237,7 @@ export default Vue.extend({
     IconMenu,
     IconRefresh,
     IconOpenInNew,
-    IconKeyboardArrowUp
+    IconArrowUpward
   },
 
   data: () => ({
@@ -423,111 +431,150 @@ export default Vue.extend({
     },
 
     scroll(el: HTMLElement, e: Event, position: VueScrollPosition): void {
-      this.isExited = !position.scrollTop
+      this.isExited = position.scrollTop <= 112
     },
 
-    backToTop(): void {
-      ;(this.$refs.backdrop as any).$refs.scroller.scrollTop = 0
+    scrollToTop(): void {
+      ;(this.$refs.backdrop as any).$refs.scroller.scrollTo(0, 0)
     }
   }
 })
 </script>
 
 <style lang="less">
+html {
+  overscroll-behavior: contain;
+}
+
 body {
   font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei UI',
     'Microsoft YaHei', sans-serif;
-  .lbz-typography('body1');
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--lbz-theme-text-medium-emphasis-on-surface);
+}
+
+strong {
+  font-weight: 700;
+}
+
+.lbz-layout-grid {
+  padding: 0;
 }
 
 .lbz-top-app-bar {
   text-transform: capitalize;
 }
 
-.layout--default.lbz-backdrop {
-  .lbz-backdrop__back-layer {
-    // .lbz-tab {
-    //   display: none;
-    //   flex: 1;
-
-    //   .lbz-tab-item {
-    //     .lbz-typography('body1');
-    //   }
-
-    //   .lbz-tab-item__indicator {
-    //     border-top-width: 3px;
-    //     border-radius: 3px 3px 0 0;
-    //   }
-    // }
-
-    .lbz-list:not(.lbz-is-nav) {
-      margin-right: -16px;
-      margin-left: -16px;
-    }
-
-    // @media #lbz-layout-grid.breakpoint[desktop] {
-    //   .lbz-top-app-bar__title {
-    //     flex: none;
-    //     width: 480px / 2 - 2 * 12px - 56px;
-    //   }
-
-    //   .lbz-tab {
-    //     display: block;
-    //   }
-
-    //   .lbz-top-app-bar__end {
-    //     display: flex;
-    //     flex-flow: row nowrap;
-    //     justify-content: flex-end;
-    //     align-items: center;
-    //     width: 480px / 2 - 2 * 12px;
-    //   }
-
-    //   .lbz-list.lbz-is-nav {
-    //     display: none;
-
-    //     + .lbz-divider {
-    //       display: none;
-    //     }
-    //   }
-    // }
+.layout-default {
+  &__separator {
+    visibility: hidden;
   }
 
-  .lbz-backdrop__front-layer {
-    border-top-right-radius: 0;
-
-    .lbz-fab {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      margin: var(--lbz-layout-grid-margin);
-    }
+  &__page {
+    margin: 0 auto;
+    max-width: 15 * 64px;
   }
 
-  @media #lbz-layout-grid.breakpoint[mobile] {
-    @supports (top: env(safe-area-inset-top)) {
-      @headerHeight: ~'56px + env(safe-area-inset-top)';
+  // active
+  &.lbz-is-active &__separator {
+    visibility: visible;
+  }
 
-      .lbz-backdrop__back-layer__header {
-        height: calc(@headerHeight);
+  &.lbz-backdrop {
+    line-height: 26px;
 
-        .lbz-top-app-bar {
-          top: env(safe-area-inset-top);
+    .lbz-backdrop__back-layer {
+      // .lbz-tab {
+      //   display: none;
+      //   flex: 1;
+
+      //   .lbz-tab-item {
+      //     .lbz-typography('body1');
+      //   }
+
+      //   .lbz-tab-item__indicator {
+      //     border-top-width: 3px;
+      //     border-radius: 3px 3px 0 0;
+      //   }
+      // }
+
+      .lbz-list:not(.lbz-is-nav) {
+        margin-right: -16px;
+        margin-left: -16px;
+      }
+
+      // @media #lbz-layout-grid.breakpoint[desktop] {
+      //   .lbz-top-app-bar__title {
+      //     flex: none;
+      //     width: 480px / 2 - 2 * 12px - 56px;
+      //   }
+
+      //   .lbz-tab {
+      //     display: block;
+      //   }
+
+      //   .lbz-top-app-bar__end {
+      //     display: flex;
+      //     flex-flow: row nowrap;
+      //     justify-content: flex-end;
+      //     align-items: center;
+      //     width: 480px / 2 - 2 * 12px;
+      //   }
+
+      //   .lbz-list.lbz-is-nav {
+      //     display: none;
+
+      //     + .lbz-divider {
+      //       display: none;
+      //     }
+      //   }
+      // }
+    }
+
+    .lbz-backdrop__front-layer {
+      border-top-right-radius: 0;
+      color: var(--lbz-theme-text-high-emphasis-on-surface);
+
+      &__content {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
+      .lbz-fab {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        margin: var(--lbz-layout-grid-margin);
+
+        html[data-lbz-theme='dark'] & {
+          color: #lbz-theme.dark[on-primary];
+          background-color: #lbz-theme.dark[primary];
         }
       }
+    }
 
-      .lbz-backdrop__front-layer {
-        height: calc(100% - (@headerHeight));
-        transform: translate3d(0, calc(@headerHeight), 0);
-      }
+    @media #lbz-layout-grid.breakpoint[mobile] {
+      @supports (top: env(safe-area-inset-top)) {
+        @headerHeight: ~'56px + env(safe-area-inset-top)';
 
-      // active
-      &.lbz-is-active .lbz-backdrop__front-layer {
-        transform: translate3d(0, calc((100% + @headerHeight) - 130px), 0);
+        .lbz-backdrop__back-layer__header {
+          height: calc(@headerHeight);
+
+          .lbz-top-app-bar {
+            top: env(safe-area-inset-top);
+          }
+        }
+
+        .lbz-backdrop__front-layer {
+          height: calc(100% - (@headerHeight));
+          transform: translate3d(0, calc(@headerHeight), 0);
+        }
+
+        // active
+        &.lbz-is-active .lbz-backdrop__front-layer {
+          transform: translate3d(0, calc((100% + @headerHeight) - 130px), 0);
+        }
       }
     }
   }

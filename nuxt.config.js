@@ -69,7 +69,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap'
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
       },
       { hid: 'canonical', rel: 'canonical', href: `${SITE_URL}/` }
     ],
