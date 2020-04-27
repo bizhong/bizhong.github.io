@@ -1,6 +1,6 @@
 # bizhong.github.io
 
-> LAN Bizhong's personal website
+> A static generated blog for GitHub Pages
 
 ## Build Setup
 

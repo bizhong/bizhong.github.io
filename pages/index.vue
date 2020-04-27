@@ -14,7 +14,7 @@
         >
           <template #center>
             <div class="lbz-card__supporting-text">
-              <span class="lbz-typography--overline">{{ item.version }}</span>
+              <span class="lbz-card__version">{{ item.version }}</span>
               <span class="lbz-card__title">{{ item.title }}</span>
               <span class="lbz-card__subtitle">{{ item.subtitle }}</span>
             </div>
@@ -60,7 +60,7 @@
           >bizhong_lan@163.com</ComponentLink
         >.
       </p>
-      <p class="slogan">Live seriously, work happily.</p>
+      <p class="page-index__slogan">Live seriously, work happily.</p>
     </ComponentHero>
   </article>
 </template>
@@ -127,11 +127,16 @@ export default Vue.extend({
 
     &__content {
       flex: auto;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    &__version {
+      .lbz-typography('overline');
+      color: var(--lbz-theme-text-high-emphasis-on-surface);
     }
 
     &__title {
-      margin: 4px 0 12px;
+      margin: 10px 0 12px;
     }
 
     .lbz-button {
@@ -139,8 +144,8 @@ export default Vue.extend({
     }
   }
 
-  p.slogan {
-    margin-top: 64px;
+  p&__slogan {
+    margin-top: 72px;
     font-weight: 500;
     text-transform: uppercase;
   }

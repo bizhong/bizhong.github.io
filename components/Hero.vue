@@ -43,6 +43,10 @@ export default Vue.extend({
 
   &__content p {
     margin: 0 0 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   + .lbz-divider {

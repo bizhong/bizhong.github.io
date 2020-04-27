@@ -13,6 +13,7 @@
           exact: true
         }"
         tag="a"
+        type="outlined"
         >Back Home</lbz-button
       >
     </template>

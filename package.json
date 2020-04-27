@@ -1,7 +1,7 @@
 {
   "name": "bizhong.github.io",
-  "version": "1.0.0",
-  "description": "LAN Bizhong's personal website",
+  "version": "1.0.0-beta.0",
+  "description": "A static generated blog for GitHub Pages",
   "author": "LAN Bizhong <bizhong_lan@163.com> (https://lanbizhong.com/)",
   "private": true,
   "scripts": {

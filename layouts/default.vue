@@ -124,7 +124,7 @@
             src="~/assets/img/wechat-qrcode.jpg"
             width="172px"
             height="172px"
-            alt="兰必钟个人微信订阅号"
+            alt="兰必钟个人订阅号"
           />
         </lbz-list-item>
       </lbz-list>
@@ -431,7 +431,7 @@ export default Vue.extend({
     },
 
     scroll(el: HTMLElement, e: Event, position: VueScrollPosition): void {
-      this.isExited = position.scrollTop <= 112
+      this.isExited = position.scrollTop <= 64
     },
 
     scrollToTop(): void {
@@ -472,8 +472,12 @@ strong {
   }
 
   &__page {
-    margin: 0 auto;
+    margin: 64px auto 104px;
     max-width: 15 * 64px;
+
+    @media #lbz-layout-grid.breakpoint[mobile] {
+      margin-top: 32px;
+    }
   }
 
   // active
@@ -537,8 +541,8 @@ strong {
       color: var(--lbz-theme-text-high-emphasis-on-surface);
 
       &__content {
-        padding-top: 64px;
-        padding-bottom: 64px;
+        padding-top: 0;
+        padding-bottom: 0;
       }
 
       .lbz-fab {
