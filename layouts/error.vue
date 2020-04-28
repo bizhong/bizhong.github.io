@@ -21,35 +21,35 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+  import Vue from 'vue'
 
-export default Vue.extend({
-  name: 'PageError',
+  export default Vue.extend({
+    name: 'PageError',
 
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-
-  computed: {
-    statusCode(): number {
-      return (this.error && this.error.statusCode) || 500
+    props: {
+      error: {
+        type: Object,
+        default: null
+      }
     },
 
-    getSubtitle(): string {
-      return this.statusCode === 404
-        ? 'Oops, page was not found.'
-        : 'Oops, something went wrong.'
+    computed: {
+      statusCode(): number {
+        return (this.error && this.error.statusCode) || 500
+      },
+
+      getSubtitle(): string {
+        return this.statusCode === 404
+          ? 'Oops, page was not found.'
+          : 'Oops, something went wrong.'
+      }
     }
-  }
-})
+  })
 </script>
 
 <style lang="less">
-.page-error.lbz-empty-state .lbz-empty-state__title {
-  margin-bottom: 24px;
-  .lbz-typography('h4');
-}
+  .page-error.lbz-empty-state .lbz-empty-state__title {
+    margin-bottom: 24px;
+    .lbz-typography('h4');
+  }
 </style>

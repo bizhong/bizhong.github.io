@@ -1,12 +1,29 @@
-const SITE_NAME = 'LAN Bizhong'
-const SITE_DESCRIPTION = "LAN Bizhong's personal website"
-const SITE_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://lanbizhong.com'
-    : 'http://localhost:3000'
+const isProduction = process.env.NODE_ENV === 'production'
+const custom = {
+  // Mandatory
+  name: 'LAN Bizhong',
+  description: "LAN Bizhong's personal website",
+  url: isProduction ? 'https://lanbizhong.com' : 'http://localhost:3000',
+  color: {
+    primary: '#1a73e8',
+    error: '#c53929',
+    theme: '#121212'
+  },
 
-process.env.npm_package_name = SITE_NAME
-process.env.npm_package_description = SITE_DESCRIPTION
+  // Optional
+  analytics: {
+    google: 'UA-139218842-1', // npm uni @nuxtjs/google-analytics
+    baidu: '5d25fff5fe2d57f369a0391ee2a2b8e6'
+  },
+  twitter: {
+    card: 'summary', // undefined
+    site: '@lanbizhong', // undefined
+    creator: '@lanbizhong' // undefined
+  }
+}
+
+process.env.npm_package_name = custom.name
+process.env.npm_package_description = custom.description
 
 export default {
   mode: 'universal',
@@ -20,7 +37,7 @@ export default {
       dir: 'ltr',
       prefix: 'og: http://ogp.me/ns#'
     },
-    title: SITE_NAME,
+    title: custom.name,
     meta: [
       { charset: 'utf-8' },
       { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
@@ -42,22 +59,22 @@ export default {
       { name: 'nightmode', content: 'disable' },
       { name: 'layoutmode', content: 'fitscreen' },
       { name: 'wap-font-scale', content: 'no' },
-      { name: 'application-name', content: SITE_NAME },
+      { name: 'application-name', content: custom.name },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
       // { name: 'google', content: 'notranslate' },
       { name: 'format-detection', content: 'telephone=no' },
-      { name: 'msapplication-tooltip', content: SITE_NAME },
-      { name: 'msapplication-starturl', content: `${SITE_URL}/` },
+      { name: 'msapplication-tooltip', content: custom.name },
+      { name: 'msapplication-starturl', content: `${custom.url}/` },
       { name: 'msapplication-tap-highlight', content: 'no' },
-      { hid: 'name', itemprop: 'name', content: SITE_NAME },
+      { hid: 'name', itemprop: 'name', content: custom.name },
       {
         hid: 'description',
         name: 'description',
         itemprop: 'description',
-        content: SITE_DESCRIPTION
+        content: custom.description
       },
-      { hid: 'image', itemprop: 'image', content: `${SITE_URL}/icon.png` }
+      { hid: 'image', itemprop: 'image', content: `${custom.url}/icon.png` }
     ],
     link: [
       { rel: 'dns-prefetch', href: 'https://fonts.googleapis.com' },
@@ -71,11 +88,11 @@ export default {
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
       },
-      { hid: 'canonical', rel: 'canonical', href: `${SITE_URL}/` }
+      { hid: 'canonical', rel: 'canonical', href: `${custom.url}/` }
     ],
     script: [
       {
-        src: 'https://hm.baidu.com/hm.js?5d25fff5fe2d57f369a0391ee2a2b8e6',
+        src: `https://hm.baidu.com/hm.js?${custom.analytics.baidu}`,
         async: true,
         defer: true
       }
@@ -88,14 +105,14 @@ export default {
    ** Env configuration
    */
   env: {
-    SITE_NAME,
-    SITE_DESCRIPTION,
-    SITE_URL
+    SITE_NAME: custom.name,
+    SITE_DESCRIPTION: custom.description,
+    SITE_URL: custom.url
   },
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#1a73e8', failedColor: '#c53929' },
+  loading: { color: custom.color.primary, failedColor: custom.color.error },
   /*
    ** Global CSS
    */
@@ -112,17 +129,16 @@ export default {
     [
       '@nuxtjs/browserconfig',
       {
-        TileColor: '#1a73e8',
+        TileColor: custom.color.primary,
         square150x150logo: { '@': { src: 'icon.png' } }
       }
     ],
     [
       '@nuxtjs/google-analytics',
       {
-        id: 'UA-139218842-1',
+        id: custom.analytics.google,
         debug: {
-          enabled: true,
-          sendHitTask: true
+          sendHitTask: isProduction
         }
       }
     ],
@@ -175,16 +191,17 @@ export default {
     },
     meta: {
       mobileAppIOS: true,
-      theme_color: '#121212',
-      ogHost: SITE_URL,
-      ogUrl: `${SITE_URL}/`,
-      twitterCard: 'summary',
-      twitterSite: '@lanbizhong',
-      twitterCreator: '@lanbizhong'
+      theme_color: custom.color.theme,
+      ogHost: custom.url,
+      ogUrl: `${custom.url}/`,
+      twitterCard: custom.twitter.card,
+      twitterSite: custom.twitter.site,
+      twitterCreator: custom.twitter.creator
     },
     manifest: {
       dir: 'ltr',
-      orientation: 'portrait'
+      orientation: 'portrait',
+      theme_color: custom.color.theme
     }
   },
   /*

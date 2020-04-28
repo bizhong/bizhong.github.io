@@ -66,88 +66,92 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+  import Vue from 'vue'
 
-import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
+  import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
 
-import ComponentHero from '~/components/Hero.vue'
-import ComponentLink from '~/components/Link.vue'
+  import ComponentHero from '~/components/Hero.vue'
+  import ComponentLink from '~/components/Link.vue'
 
-export default Vue.extend({
-  name: 'PageIndex',
+  export default Vue.extend({
+    name: 'PageIndex',
 
-  components: {
-    IconOpenInNew,
+    components: {
+      IconOpenInNew,
 
-    ComponentHero,
-    ComponentLink
-  },
+      ComponentHero,
+      ComponentLink
+    },
 
-  data: () => ({
-    PROJECTS: [
-      {
-        version: 'Beta',
-        title: '@lbzui/vue',
-        subtitle: 'Material Components for Vue.js',
-        buttons: [
-          {
-            href: 'https://github.com/lbzui/vue',
-            label: 'GitHub'
-          },
-          {
-            href: 'https://lbzui-vue.lanbizhong.com/',
-            label: 'Doc'
-          }
-        ]
-      },
-      {
-        version: 'v2.1.4',
-        title: 'Bizhongbio',
-        subtitle: 'A free, minimalistic, and responsive WordPress Blog Theme',
-        buttons: [
-          {
-            href: 'https://github.com/bizhongbio/bizhongbio',
-            label: 'GitHub'
-          },
-          {
-            href: 'https://bizhongbio.github.io/',
-            label: 'Demo'
-          }
-        ]
-      }
-    ]
+    data: () => ({
+      PROJECTS: [
+        {
+          version: 'Beta',
+          title: '@lbzui/vue',
+          subtitle: 'Material Components for Vue.js',
+          buttons: [
+            {
+              href: 'https://github.com/lbzui/vue',
+              label: 'GitHub'
+            },
+            {
+              href: 'https://lbzui-vue.lanbizhong.com/',
+              label: 'Doc'
+            }
+          ]
+        },
+        {
+          version: 'v2.1.4',
+          title: 'Bizhongbio',
+          subtitle: 'A free, minimalistic, and responsive WordPress Blog Theme',
+          buttons: [
+            {
+              href: 'https://github.com/bizhongbio/bizhongbio',
+              label: 'GitHub'
+            },
+            {
+              href: 'https://bizhongbio.github.io/',
+              label: 'Demo'
+            }
+          ]
+        }
+      ]
+    })
   })
-})
 </script>
 
 <style lang="less">
-.page-index {
-  .lbz-card {
-    background-color: transparent;
-
-    &__content {
-      flex: auto;
-      margin-bottom: 8px;
+  .page-index {
+    .lbz-layout-grid {
+      padding: 0;
     }
 
-    &__version {
-      .lbz-typography('overline');
-      color: var(--lbz-theme-text-high-emphasis-on-surface);
+    .lbz-card {
+      background-color: transparent;
+
+      &__content {
+        flex: auto;
+        margin-bottom: 8px;
+      }
+
+      &__version {
+        .lbz-typography('overline');
+        color: var(--lbz-theme-text-high-emphasis-on-surface);
+      }
+
+      &__title {
+        margin: 10px 0 12px;
+      }
+
+      .lbz-button {
+        min-width: auto;
+      }
     }
 
-    &__title {
-      margin: 10px 0 12px;
-    }
-
-    .lbz-button {
-      min-width: auto;
+    & &__slogan {
+      margin-top: 72px;
+      font-weight: 500;
+      text-transform: uppercase;
     }
   }
-
-  p&__slogan {
-    margin-top: 72px;
-    font-weight: 500;
-    text-transform: uppercase;
-  }
-}
 </style>

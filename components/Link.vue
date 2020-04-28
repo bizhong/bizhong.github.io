@@ -5,40 +5,40 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+  import Vue from 'vue'
 
-import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
+  import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
 
-export default Vue.extend({
-  name: 'ComponentLink',
+  export default Vue.extend({
+    name: 'ComponentLink',
 
-  components: {
-    IconOpenInNew
-  },
-
-  props: {
-    href: {
-      type: String,
-      default: ''
+    components: {
+      IconOpenInNew
     },
-    newTab: {
-      type: Boolean,
-      default: false
+
+    props: {
+      href: {
+        type: String,
+        required: true
+      },
+      newTab: {
+        type: Boolean,
+        default: false
+      }
     }
-  }
-})
+  })
 </script>
 
 <style lang="less">
-.component-link {
-  .lbz-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
-  }
+  .component-link {
+    .lbz-icon {
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+    }
 
-  &:hover {
-    text-decoration: underline;
+    &:hover {
+      text-decoration: underline;
+    }
   }
-}
 </style>

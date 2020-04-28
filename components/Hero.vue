@@ -9,48 +9,48 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+  import Vue from 'vue'
 
-export default Vue.extend({
-  name: 'ComponentHero',
+  export default Vue.extend({
+    name: 'ComponentHero',
 
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    subtitle: {
-      type: String,
-      default: ''
+    props: {
+      title: {
+        type: String,
+        default: ''
+      },
+      subtitle: {
+        type: String,
+        default: ''
+      }
     }
-  }
-})
+  })
 </script>
 
 <style lang="less">
-.component-hero {
-  &__header {
-    padding-bottom: 32px;
+  .component-hero {
+    &__header {
+      padding-bottom: 32px;
 
-    h3 {
-      margin: 0;
+      h3 {
+        margin: 0;
+      }
+
+      p {
+        margin: 8px 0 0;
+      }
     }
 
-    p {
-      margin: 8px 0 0;
+    &__content p {
+      margin: 0 0 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    + .lbz-divider {
+      margin: 48px 0;
     }
   }
-
-  &__content p {
-    margin: 0 0 24px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  + .lbz-divider {
-    margin: 48px 0;
-  }
-}
 </style>
