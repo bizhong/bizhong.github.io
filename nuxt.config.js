@@ -5,8 +5,8 @@ const custom = {
   description: "LAN Bizhong's personal website",
   url: isProduction ? 'https://lanbizhong.com' : 'http://localhost:3000',
   color: {
-    primary: '#1a73e8',
-    error: '#c53929',
+    primary: '#8ab4f8',
+    error: '#f28b82',
     theme: '#121212'
   },
 
@@ -129,7 +129,7 @@ export default {
     [
       '@nuxtjs/browserconfig',
       {
-        TileColor: custom.color.primary,
+        TileColor: custom.color.theme,
         square150x150logo: { '@': { src: 'icon.png' } }
       }
     ],
@@ -164,6 +164,8 @@ export default {
       './node_modules/@lbzui/vue/src/assets/css/variables/_surface.less',
       // './node_modules/@lbzui/vue/src/assets/css/variables/_theme.less',
       './assets/css/lbzui/_theme.less', // your custom theme
+      // './node_modules/@lbzui/vue/src/assets/css/variables/_variables.less',
+      './assets/css/lbzui/_variables.less', // your custom variables
 
       // mixins
       './node_modules/@lbzui/vue/src/assets/css/utilities/_*.less'

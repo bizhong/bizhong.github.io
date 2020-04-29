@@ -1,6 +1,11 @@
 <template>
-  <a class="component-link" :href="href" :target="newTab ? '_blank' : '_self'">
-    <slot /><lbz-icon v-if="newTab" disabled><IconOpenInNew /></lbz-icon>
+  <a
+    class="component-link"
+    :href="href"
+    target="_blank"
+    rel="nofollow noopener noreferrer"
+  >
+    <slot /><lbz-icon v-if="icon" disabled><IconOpenInNew /></lbz-icon>
   </a>
 </template>
 
@@ -21,9 +26,9 @@
         type: String,
         required: true
       },
-      newTab: {
+      icon: {
         type: Boolean,
-        default: false
+        default: true
       }
     }
   })

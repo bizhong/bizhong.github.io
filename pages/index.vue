@@ -27,6 +27,7 @@
                 tag="a"
                 :href="button.href"
                 target="_blank"
+                rel="nofollow noopener noreferrer"
                 ><template #icon><IconOpenInNew /></template
                 >{{ button.label }}</lbz-button
               >
@@ -45,7 +46,7 @@
       </p>
       <p>
         I was born on February 26, 1994 in Fuzhou, China. And I graduated from
-        <ComponentLink href="https://www.scuec.edu.cn/" rel="nofollow" new-tab
+        <ComponentLink href="https://www.scuec.edu.cn/"
           >South-Central Minzu University</ComponentLink
         >
         on June 31, 2017, where I majored in Computer Science and Technology.
@@ -56,7 +57,7 @@
       <p>I am not sure, but I'll try my best to make something awesome.</p>
       <p>
         Get in touch? Email me at
-        <ComponentLink href="mailto:bizhong_lan@163.com" rel="nofollow"
+        <ComponentLink href="mailto:bizhong_lan@163.com" :icon="false"
           >bizhong_lan@163.com</ComponentLink
         >.
       </p>

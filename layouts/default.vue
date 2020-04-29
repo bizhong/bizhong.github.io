@@ -107,8 +107,8 @@
           v-for="(item, index) of COMMUNITIES"
           :key="index"
           :href="item.href"
-          rel="nofollow"
           target="_blank"
+          rel="nofollow noopener noreferrer"
         >
           <template #center>{{ item.label }}</template>
           <template #end
@@ -137,7 +137,8 @@
         class="layout-default__page"
         role="main"
       />
-
+    </template>
+    <template #popup>
       <!-- Scroll to top -->
       <lbz-fab
         background="surface"
@@ -428,17 +429,13 @@
       },
 
       scrollToTop(): void {
-        ;(this.$refs.backdrop as any).$refs.scroller.scrollTo(0, 0)
+        ;(this.$refs.backdrop as any).fscrollToTop()
       }
     }
   })
 </script>
 
 <style lang="less">
-  html {
-    overscroll-behavior: none;
-  }
-
   body {
     font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei UI',
@@ -457,12 +454,13 @@
     }
 
     &__page {
-      margin: 64px auto 104px;
+      margin: 0 auto;
+      padding: 64px 0 128px;
       max-width: 15 * 64px;
       color: var(--lbz-theme-text-high-emphasis-on-surface);
 
       @media #lbz-layout-grid.breakpoint[mobile] {
-        margin-top: 32px;
+        padding-top: 32px;
       }
     }
 
@@ -472,7 +470,6 @@
     }
 
     &.lbz-backdrop {
-      position: absolute;
       line-height: 26px;
 
       .lbz-backdrop__back-layer {
@@ -533,20 +530,30 @@
       }
 
       .lbz-backdrop__front-layer {
-        z-index: auto;
         border-top-right-radius: 0;
         .lbz-surface(1);
 
         &__content {
           padding-top: 0;
           padding-bottom: 0;
-        }
 
+          > :first-child {
+            height: auto;
+            min-height: calc(100% + 1px);
+          }
+        }
+      }
+
+      .lbz-backdrop__popup {
         .lbz-fab {
           position: fixed;
           right: 0;
           bottom: 0;
-          margin: var(--lbz-layout-grid-margin);
+          margin: 24px 48px 48px;
+
+          @media #lbz-layout-grid.breakpoint[mobile] {
+            margin-right: 24px;
+          }
 
           html[data-lbz-theme='dark'] & {
             color: #lbz-theme.dark[on-primary];
