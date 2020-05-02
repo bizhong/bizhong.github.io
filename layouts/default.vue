@@ -142,7 +142,7 @@
       <!-- Scroll to top -->
       <lbz-fab
         background="surface"
-        :inactive="isExited"
+        :inactive="isActive || isExited"
         title="Scroll to top"
         @click.stop="scrollToTop"
       >
@@ -380,7 +380,7 @@
         const _items: any[] = this.SETTINGS[i].items
         // const value: string = !i ? this.language : this.theme
         const value: string = this.theme
-        const index: number = _items.findIndex((val) => {
+        const index: number = _items.findIndex(val => {
           return val.value === value
         })
 
@@ -448,6 +448,119 @@
     font-weight: 700;
   }
 
+  .lbz-backdrop {
+    line-height: 26px;
+
+    &__back-layer {
+      .lbz-top-app-bar {
+        text-transform: capitalize;
+
+        &__container {
+          padding: 8px 12px;
+          height: 64px;
+        }
+      }
+
+      // .lbz-tab {
+      //   display: none;
+      //   flex: 1;
+
+      //   &-item {
+      //     .lbz-typography('body1');
+      //   }
+
+      //   &-item__indicator {
+      //     border-top-width: 3px;
+      //     border-radius: 3px 3px 0 0;
+      //   }
+      // }
+
+      .lbz-list:not(.lbz-is-nav) {
+        margin-right: -16px;
+        margin-left: -16px;
+      }
+
+      // @media #lbz-layout-grid.breakpoint[desktop] {
+      //   .lbz-top-app-bar__title {
+      //     flex: none;
+      //     width: 480px / 2 - 2 * 12px - 56px;
+      //   }
+
+      //   .lbz-tab {
+      //     display: block;
+      //   }
+
+      //   .lbz-top-app-bar__end {
+      //     display: flex;
+      //     flex-flow: row nowrap;
+      //     justify-content: flex-end;
+      //     align-items: center;
+      //     width: 480px / 2 - 2 * 12px;
+      //   }
+
+      //   .lbz-list.lbz-is-nav {
+      //     display: none;
+
+      //     + .lbz-divider {
+      //       display: none;
+      //     }
+      //   }
+      // }
+    }
+
+    &__front-layer {
+      border-top-right-radius: 0;
+      .lbz-surface(1);
+
+      &__content {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    &__popup {
+      .lbz-fab {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        margin: 24px 48px 48px;
+
+        @media #lbz-layout-grid.breakpoint[mobile] {
+          margin-right: 24px;
+        }
+
+        html[data-lbz-theme='dark'] & {
+          color: #lbz-theme.dark[on-primary];
+          background-color: #lbz-theme.dark[primary];
+        }
+      }
+    }
+
+    @media #lbz-layout-grid.breakpoint[mobile] {
+      @supports (top: env(safe-area-inset-top)) {
+        @headerHeight: ~'64px + env(safe-area-inset-top)';
+
+        &__back-layer__header {
+          height: calc(@headerHeight);
+
+          .lbz-top-app-bar {
+            top: env(safe-area-inset-top);
+          }
+        }
+
+        &__front-layer {
+          height: calc(100% - (@headerHeight));
+          transform: translate3d(0, calc(@headerHeight), 0);
+        }
+
+        // active
+        &.lbz-is-active &__front-layer {
+          transform: translate3d(0, calc((100% + @headerHeight) - 130px), 0);
+        }
+      }
+    }
+  }
+
   .layout-default {
     &__separator {
       visibility: hidden;
@@ -455,6 +568,7 @@
 
     &__page {
       margin: 0 auto;
+      box-sizing: border-box;
       padding: 64px 0 128px;
       max-width: 15 * 64px;
       color: var(--lbz-theme-text-high-emphasis-on-surface);
@@ -467,124 +581,6 @@
     // active
     &.lbz-is-active &__separator {
       visibility: visible;
-    }
-
-    &.lbz-backdrop {
-      line-height: 26px;
-
-      .lbz-backdrop__back-layer {
-        .lbz-top-app-bar {
-          text-transform: capitalize;
-
-          &__container {
-            padding: 8px 12px;
-            height: 64px;
-          }
-        }
-
-        // .lbz-tab {
-        //   display: none;
-        //   flex: 1;
-
-        //   .lbz-tab-item {
-        //     .lbz-typography('body1');
-        //   }
-
-        //   .lbz-tab-item__indicator {
-        //     border-top-width: 3px;
-        //     border-radius: 3px 3px 0 0;
-        //   }
-        // }
-
-        .lbz-list:not(.lbz-is-nav) {
-          margin-right: -16px;
-          margin-left: -16px;
-        }
-
-        // @media #lbz-layout-grid.breakpoint[desktop] {
-        //   .lbz-top-app-bar__title {
-        //     flex: none;
-        //     width: 480px / 2 - 2 * 12px - 56px;
-        //   }
-
-        //   .lbz-tab {
-        //     display: block;
-        //   }
-
-        //   .lbz-top-app-bar__end {
-        //     display: flex;
-        //     flex-flow: row nowrap;
-        //     justify-content: flex-end;
-        //     align-items: center;
-        //     width: 480px / 2 - 2 * 12px;
-        //   }
-
-        //   .lbz-list.lbz-is-nav {
-        //     display: none;
-
-        //     + .lbz-divider {
-        //       display: none;
-        //     }
-        //   }
-        // }
-      }
-
-      .lbz-backdrop__front-layer {
-        border-top-right-radius: 0;
-        .lbz-surface(1);
-
-        &__content {
-          padding-top: 0;
-          padding-bottom: 0;
-
-          > :first-child {
-            height: auto;
-            min-height: calc(100% + 1px);
-          }
-        }
-      }
-
-      .lbz-backdrop__popup {
-        .lbz-fab {
-          position: fixed;
-          right: 0;
-          bottom: 0;
-          margin: 24px 48px 48px;
-
-          @media #lbz-layout-grid.breakpoint[mobile] {
-            margin-right: 24px;
-          }
-
-          html[data-lbz-theme='dark'] & {
-            color: #lbz-theme.dark[on-primary];
-            background-color: #lbz-theme.dark[primary];
-          }
-        }
-      }
-
-      @media #lbz-layout-grid.breakpoint[mobile] {
-        @supports (top: env(safe-area-inset-top)) {
-          @headerHeight: ~'64px + env(safe-area-inset-top)';
-
-          .lbz-backdrop__back-layer__header {
-            height: calc(@headerHeight);
-
-            .lbz-top-app-bar {
-              top: env(safe-area-inset-top);
-            }
-          }
-
-          .lbz-backdrop__front-layer {
-            height: calc(100% - (@headerHeight));
-            transform: translate3d(0, calc(@headerHeight), 0);
-          }
-
-          // active
-          &.lbz-is-active .lbz-backdrop__front-layer {
-            transform: translate3d(0, calc((100% + @headerHeight) - 130px), 0);
-          }
-        }
-      }
     }
   }
 </style>

@@ -137,7 +137,6 @@
 
       &__version {
         .lbz-typography('overline');
-        color: var(--lbz-theme-text-high-emphasis-on-surface);
       }
 
       &__title {

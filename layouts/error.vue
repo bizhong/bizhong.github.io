@@ -48,7 +48,7 @@
 </script>
 
 <style lang="less">
-  .page-error.lbz-empty-state .lbz-empty-state__title {
+  .page-error .lbz-empty-state__title {
     margin-bottom: 24px;
     .lbz-typography('h4');
   }

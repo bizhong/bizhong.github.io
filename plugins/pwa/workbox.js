@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-undef */
 
 self.__precacheManifest = [].concat(self.__precacheManifest || [])
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {})

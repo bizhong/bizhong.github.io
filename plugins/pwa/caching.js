@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-undef */
 
 // Enable rangeRequests (Safari requires)
 workbox.routing.registerRoute(

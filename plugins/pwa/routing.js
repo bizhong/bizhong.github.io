@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-undef */
 
 // Cache the Google Fonts stylesheets with a stale while revalidate strategy
 workbox.routing.registerRoute(
