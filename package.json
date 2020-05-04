@@ -1,6 +1,6 @@
 {
   "name": "bizhong.github.io",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A static generated blog for GitHub Pages",
   "author": "LAN Bizhong <bizhong_lan@163.com> (https://lanbizhong.com/)",
   "private": true,
@@ -15,7 +15,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@lbzui/vue": "^0.7.0",
+    "@lbzui/vue": "^0.7.1",
     "@nuxt/typescript-runtime": "^0.4.0",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
