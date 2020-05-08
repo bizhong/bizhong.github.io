@@ -1,8 +1,8 @@
 <template>
   <section class="component-hero">
     <header v-if="title || subtitle" class="component-hero__header">
-      <h3 v-if="title" class="lbz-typography--h4">{{ title }}</h3>
-      <p v-if="subtitle" class="lbz-typography--subtitle1">{{ subtitle }}</p>
+      <h3 v-if="title">{{ title }}</h3>
+      <p v-if="subtitle">{{ subtitle }}</p>
     </header>
     <div class="component-hero__content"><slot /></div>
   </section>
@@ -34,10 +34,12 @@
 
       h3 {
         margin: 0;
+        .lbz-typography('h4');
       }
 
       p {
         margin: 8px 0 0;
+        .lbz-typography('subtitle1');
       }
     }
 

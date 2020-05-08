@@ -1,11 +1,16 @@
 <template>
   <a
-    class="component-link"
+    :class="[
+      'component-link',
+      onBackground && `component-link--on-${onBackground}`
+    ]"
     :href="href"
     target="_blank"
     rel="nofollow noopener noreferrer"
   >
-    <slot /><lbz-icon v-if="icon" disabled><IconOpenInNew /></lbz-icon>
+    <slot /><lbz-icon v-if="icon" :color="color" disabled
+      ><IconOpenInNew
+    /></lbz-icon>
   </a>
 </template>
 
@@ -22,6 +27,10 @@
     },
 
     props: {
+      onBackground: {
+        type: String,
+        default: '' // 'surface' (default), 'light', 'dark'
+      },
       href: {
         type: String,
         required: true
@@ -30,12 +39,33 @@
         type: Boolean,
         default: true
       }
+    },
+
+    computed: {
+      color(): string {
+        return this.onBackground === 'light'
+          ? 'dark'
+          : this.onBackground === 'dark'
+          ? 'light'
+          : ''
+      }
     }
   })
 </script>
 
 <style lang="less">
   .component-link {
+    // on-background
+    &--on {
+      &-light {
+        color: #lbz-theme.light[primary];
+      }
+
+      &-dark {
+        color: #lbz-theme.dark[primary];
+      }
+    }
+
     .lbz-icon {
       width: 16px;
       height: 16px;

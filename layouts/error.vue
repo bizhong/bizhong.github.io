@@ -1,9 +1,5 @@
 <template>
-  <lbz-empty-state
-    class="page-error"
-    title="¯\_(ツ)_/¯"
-    :subtitle="getSubtitle"
-  >
+  <lbz-empty-state class="page-error" title="¯\_(ツ)_/¯" :subtitle="subtitle">
     <template #end>
       <lbz-button
         router-link
@@ -38,7 +34,7 @@
         return (this.error && this.error.statusCode) || 500
       },
 
-      getSubtitle(): string {
+      subtitle(): string {
         return this.statusCode === 404
           ? 'Oops, page was not found.'
           : 'Oops, something went wrong.'

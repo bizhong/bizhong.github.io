@@ -8,7 +8,7 @@
         <lbz-card
           v-for="(item, index) of PROJECTS"
           :key="index"
-          class="lbz-layout-grid__cell lbz-layout-grid__span--4 lbz-state-no-before--child"
+          class="lbz-layout-grid__cell lbz-layout-grid__span--6 lbz-state-no-before--child"
           type="outlined"
           :ripple="false"
         >
@@ -69,19 +69,19 @@
 <script lang="ts">
   import Vue from 'vue'
 
-  import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
-
   import ComponentHero from '~/components/Hero.vue'
   import ComponentLink from '~/components/Link.vue'
+
+  import IconOpenInNew from '~/assets/img/icon/open_in_new.svg?inline'
 
   export default Vue.extend({
     name: 'PageIndex',
 
     components: {
-      IconOpenInNew,
-
       ComponentHero,
-      ComponentLink
+      ComponentLink,
+
+      IconOpenInNew
     },
 
     data: () => ({
@@ -124,7 +124,8 @@
 <style lang="less">
   .page-index {
     .lbz-layout-grid {
-      padding: 0;
+      padding-right: 0;
+      padding-left: 0;
     }
 
     .lbz-card {
@@ -132,7 +133,6 @@
 
       &__content {
         flex: auto;
-        margin-bottom: 8px;
       }
 
       &__version {
@@ -140,7 +140,7 @@
       }
 
       &__title {
-        margin: 10px 0 12px;
+        margin: 10px 0 16px;
       }
 
       .lbz-button {

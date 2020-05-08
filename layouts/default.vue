@@ -8,7 +8,7 @@
     @scroll="scroll"
   >
     <template #back-start>
-      <lbz-top-app-bar background="dark" :title="getTitle" role="banner">
+      <lbz-top-app-bar background="dark" :title="title" role="banner">
         <template #start>
           <lbz-icon-button
             on-background="dark"
@@ -127,7 +127,25 @@
 
       <lbz-divider on-background="dark" />
 
-      <p>© {{ new Date().getFullYear() }} LAN Bizhong</p>
+      <p>© {{ `${new Date().getFullYear()} ${siteName}` }}</p>
+
+      <!-- Apache-2.0 License is NOT allowed to delete -->
+      <p>
+        Build with
+        <ComponentLink on-background="dark" href="https://nuxtjs.org/"
+          >Nuxt.js</ComponentLink
+        >
+        and
+        <ComponentLink
+          on-background="dark"
+          href="https://lbzui-vue.lanbizhong.com/"
+          >@lbzui/vue</ComponentLink
+        >
+        by
+        <ComponentLink on-background="dark" href="https://lanbizhong.com/"
+          >LAN Bizhong</ComponentLink
+        >
+      </p>
     </template>
     <template #front-center>
       <!-- Page -->
@@ -215,6 +233,8 @@
   } from '@lbzui/vue/src/utils/funcs'
   import { VueScrollPosition } from '@lbzui/vue/types'
 
+  import ComponentLink from '~/components/Link.vue'
+
   import IconLogo from '~/assets/img/icon/layers.svg?inline'
   import IconArrowBack from '~/assets/img/icon/arrow_back.svg?inline'
   import IconClose from '~/assets/img/icon/close.svg?inline'
@@ -227,6 +247,8 @@
     name: 'LayoutDefault',
 
     components: {
+      ComponentLink,
+
       IconLogo,
       IconArrowBack,
       IconClose,
@@ -326,14 +348,14 @@
         return this.$route.name === 'index'
       },
 
-      getTitle(): string {
+      siteName(): string {
+        return process.env.SITE_NAME || ''
+      },
+
+      title(): string {
         const name: string = this.$route.name || ''
 
-        return !name
-          ? 'error'
-          : this.isHomePage
-          ? process.env.SITE_NAME || ''
-          : name
+        return !name ? 'error' : this.isHomePage ? this.siteName : name
       }
     },
 
@@ -570,7 +592,7 @@
       margin: 0 auto;
       box-sizing: border-box;
       padding: 64px 0 128px;
-      max-width: 15 * 64px;
+      max-width: 12 * 64px;
       color: var(--lbz-theme-text-high-emphasis-on-surface);
 
       @media #lbz-layout-grid.breakpoint[mobile] {
