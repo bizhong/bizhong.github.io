@@ -130,7 +130,7 @@
       <p>© {{ `${new Date().getFullYear()} ${siteName}` }}</p>
 
       <!-- Apache-2.0 License is NOT allowed to delete -->
-      <p>
+      <p class="layout-default__license">
         Build with
         <ComponentLink on-background="dark" href="https://nuxtjs.org/"
           >Nuxt.js</ComponentLink
@@ -586,6 +586,11 @@
   .layout-default {
     &__separator {
       visibility: hidden;
+    }
+
+    &__license {
+      .lbz-typography('body2');
+      color: var(--lbz-theme-text-disabled-on-dark);
     }
 
     &__page {
