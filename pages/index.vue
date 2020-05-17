@@ -132,7 +132,7 @@
       background-color: transparent;
 
       &__content {
-        flex: auto;
+        flex: 1;
       }
 
       &__version {

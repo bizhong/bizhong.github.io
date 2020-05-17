@@ -3,7 +3,7 @@
 :root {
   /* Layout grid */
   --lbz-layout-grid-column: 12;
-  --lbz-layout-grid-gutter: 24px;
+  --lbz-layout-grid-gutter: 16px;
   --lbz-layout-grid-margin: 24px;
 
   /* Shape */

@@ -96,15 +96,15 @@
 
       <lbz-divider on-background="dark" />
 
-      <!-- Communities -->
+      <!-- Community -->
       <lbz-list
         tag="nav"
         item-tag="a"
         on-background="dark"
-        subheader="Communities"
+        subheader="Community"
       >
         <lbz-list-item
-          v-for="(item, index) of COMMUNITIES"
+          v-for="(item, index) of COMMUNITY"
           :key="index"
           :href="item.href"
           target="_blank"
@@ -168,32 +168,6 @@
       </lbz-fab>
 
       <!-- Dialogs -->
-      <!-- <lbz-dialog
-        :active.sync="dialogs.language.active"
-        type="simple"
-        :title="dialogs.language.title"
-        append-to-body
-      >
-        <template #center>
-          <lbz-list dense>
-            <lbz-list-item
-              v-for="(item, index) of SETTINGS[0].items"
-              :key="index"
-              @click.stop="setLanguage(item.value)"
-            >
-              <template #start>
-                <lbz-radio
-                  v-model="language"
-                  :value="item.value"
-                  color="primary"
-                  @change="setLanguage"
-                />
-              </template>
-              <template #center>{{ item.label }}</template>
-            </lbz-list-item>
-          </lbz-list>
-        </template>
-      </lbz-dialog> -->
       <lbz-dialog
         :active.sync="dialogs.theme.active"
         type="simple"
@@ -270,23 +244,6 @@
       //   }
       // ],
       SETTINGS: [
-        // {
-        //   title: 'Language',
-        //   items: [
-        //     {
-        //       value: 'en',
-        //       label: 'English'
-        //     },
-        //     {
-        //       value: 'sc',
-        //       label: '简体中文'
-        //     },
-        //     {
-        //       value: 'tc',
-        //       label: '繁體中文'
-        //     }
-        //   ]
-        // },
         {
           title: 'Theme',
           items: [
@@ -305,7 +262,7 @@
           ]
         }
       ],
-      COMMUNITIES: [
+      COMMUNITY: [
         {
           href: 'https://github.com/bizhong',
           label: 'GitHub'
@@ -325,17 +282,12 @@
       ],
 
       supportsCssVars: false,
-      // language: 'en',
       theme: 'system',
       isDark: false,
       isActive: false,
       isExited: true,
 
       dialogs: {
-        // language: {
-        //   active: false,
-        //   title: 'Choose language'
-        // },
         theme: {
           active: false,
           title: 'Choose theme'
@@ -369,7 +321,6 @@
 
     mounted(): void {
       this.supportsCssVars = lbzfSupportsCssVariables()
-      // this.setLanguage(localStorage.getItem('LANGUAGE') || 'en')
 
       if (this.supportsCssVars) {
         this.setTheme(localStorage.getItem('THEME') || 'system')
@@ -390,12 +341,11 @@
         window.location.reload()
       },
 
-      // handleSettings(i: number): void {
-      //   this.dialogs[!i ? 'language' : 'theme'].active = true
-      // },
-
-      handleSettings(): void {
-        this.dialogs.theme.active = true
+      handleSettings(i: number): void {
+        // this.dialogs[!i ? 'language' : 'theme'].active = true
+        if (!i) {
+          this.dialogs.theme.active = true
+        }
       },
 
       getSubtitle(i: number): string {
@@ -408,17 +358,6 @@
 
         return _items[index].label
       },
-
-      // setLanguage(val: string): void {
-      //   const _language: any = this.dialogs.language
-
-      //   this.language = val
-
-      //   if (_language.active) {
-      //     localStorage.setItem('LANGUAGE', val)
-      //     _language.active = false
-      //   }
-      // },
 
       setTheme(val?: string): void {
         const _theme: any = this.dialogs.theme
@@ -476,11 +415,6 @@
     &__back-layer {
       .lbz-top-app-bar {
         text-transform: capitalize;
-
-        &__container {
-          padding: 8px 12px;
-          height: 64px;
-        }
       }
 
       // .lbz-tab {
@@ -548,7 +482,7 @@
         margin: 24px 48px 48px;
 
         @media #lbz-layout-grid.breakpoint[mobile] {
-          margin-right: 24px;
+          margin-right: #lbz-layout-grid.mobile[margin];
         }
 
         html[data-lbz-theme='dark'] & {
@@ -560,10 +494,13 @@
 
     @media #lbz-layout-grid.breakpoint[mobile] {
       @supports (top: env(safe-area-inset-top)) {
-        @headerHeight: ~'64px + env(safe-area-inset-top)';
+        @blhhm: calc(
+          #lbz-backdrop.back-layer[header-height-mobile] +
+            env(safe-area-inset-top)
+        );
 
         &__back-layer__header {
-          height: calc(@headerHeight);
+          height: @blhhm;
 
           .lbz-top-app-bar {
             top: env(safe-area-inset-top);
@@ -571,13 +508,17 @@
         }
 
         &__front-layer {
-          height: calc(100% - (@headerHeight));
-          transform: translate3d(0, calc(@headerHeight), 0);
+          height: calc(100% - @blhhm);
+          transform: translate3d(0, @blhhm, 0);
         }
 
         // active
         &.lbz-is-active &__front-layer {
-          transform: translate3d(0, calc((100% + @headerHeight) - 130px), 0);
+          transform: translate3d(
+            0,
+            calc((100% + @blhhm) - #lbz-backdrop.front-layer[height-active]),
+            0
+          );
         }
       }
     }
@@ -596,13 +537,9 @@
     &__page {
       margin: 0 auto;
       box-sizing: border-box;
-      padding: 64px 0 128px;
-      max-width: 12 * 64px;
+      padding: 48px 0 128px;
+      max-width: 2 * 360px + #lbz-layout-grid.desktop[gutter];
       color: var(--lbz-theme-text-high-emphasis-on-surface);
-
-      @media #lbz-layout-grid.breakpoint[mobile] {
-        padding-top: 32px;
-      }
     }
 
     // active

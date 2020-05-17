@@ -62,7 +62,6 @@ export default {
       { name: 'application-name', content: custom.name },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
-      // { name: 'google', content: 'notranslate' },
       { name: 'format-detection', content: 'telephone=no' },
       { name: 'msapplication-tooltip', content: custom.name },
       { name: 'msapplication-starturl', content: `${custom.url}/` },
