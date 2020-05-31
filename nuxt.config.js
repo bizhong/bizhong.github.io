@@ -38,6 +38,10 @@ export default {
       { name: 'layoutmode', content: 'fitscreen' },
       { name: 'wap-font-scale', content: 'no' },
       { name: 'application-name', content: site.name },
+      {
+        name: 'author',
+        content: 'LAN Bizhong,bizhong_lan@163.com,https://lanbizhong.com/'
+      },
       { name: 'robots', content: 'index,follow' },
       { name: 'googlebot', content: 'index,follow' },
       { name: 'format-detection', content: 'telephone=no' },

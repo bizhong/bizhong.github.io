@@ -1,6 +1,6 @@
 # bizhong.github.io
 
-> A static generated blog for GitHub Pages
+> A static generated blog for GitHub Pages site
 
 ## Build Setup
 
