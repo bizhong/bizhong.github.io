@@ -54,7 +54,6 @@
         enjoy learning, cooking, running, and watching American and Korean
         dramas.
       </p>
-      <p>I am not sure, but I'll try my best to make something awesome.</p>
       <p>
         Get in touch? Email me at
         <ComponentLink href="mailto:bizhong_lan@163.com" :icon="false"
