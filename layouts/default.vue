@@ -274,10 +274,6 @@
         {
           href: 'https://juejin.im/user/5acce57b5188255c93239e72/posts',
           label: '掘金'
-        },
-        {
-          href: 'https://www.jianshu.com/u/9281723851d6',
-          label: '简书'
         }
       ],
 
