@@ -42,17 +42,9 @@
     <ComponentHero title="Who am I" subtitle="Bobby, a front-end developer">
       <p>
         Hello! My name is <strong>LAN Bizhong</strong> (simplified Chinese:
-        兰必钟, traditional Chinese: 藍必鐘, pinyin: Lán Bìzhōng).
-      </p>
-      <p>
-        I was born on February 26, 1994 in Fuzhou, China. And I graduated from
-        <ComponentLink href="https://www.scuec.edu.cn/"
-          >South-Central Minzu University</ComponentLink
-        >
-        on June 31, 2017, where I majored in Computer Science and Technology.
-        Since then, I have been working in Shenzhen, China. But hard work, I
-        enjoy learning, cooking, running, and watching American and Korean
-        dramas.
+        兰必钟, pinyin: Lán Bìzhōng). After graduating from university, I
+        started working in Shenzhen, China on July 14, 2017. And I like to
+        study, code, cook, run, and watch American TV series in daily life.
       </p>
       <p>
         Get in touch? Email me at
