@@ -44,8 +44,7 @@
         Hello! My name is <strong>LAN Bizhong</strong> (simplified Chinese:
         兰必钟, pinyin: Lán Bìzhōng). After graduating from university, I
         started working in Shenzhen, China on July 14, 2017. And I like to
-        study, code, cook, run, and watch American & Korean dramas in daily
-        life.
+        study, code, cook, run, and watch movies and TV shows in daily life.
       </p>
       <p>
         Get in touch? Email me at
