@@ -40,11 +40,11 @@
     <lbz-divider />
 
     <ComponentHero title="Who am I" subtitle="Bobby, a front-end developer">
+      <p>Hello! My name is <strong>LAN Bizhong</strong>.</p>
       <p>
-        Hello! My name is <strong>LAN Bizhong</strong> (simplified Chinese:
-        兰必钟, pinyin: Lán Bìzhōng). After graduating from university, I
-        started working in Shenzhen, China on July 14, 2017. And I like to
-        study, code, cook, run, and watch movies and TV shows in daily life.
+        After graduating from university, I started working in Shenzhen, China
+        on July 14, 2017. And I like to study, code, cook, run, and watch movies
+        and TV shows in daily life.
       </p>
       <p>
         Get in touch? Email me at
@@ -93,7 +93,7 @@
           ]
         },
         {
-          version: 'v2.1.4',
+          version: 'v2.1.5',
           title: 'Bizhongbio',
           subtitle: 'A free, minimalistic, and responsive WordPress Blog Theme',
           buttons: [

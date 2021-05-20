@@ -115,14 +115,14 @@
             ><lbz-icon><IconOpenInNew /></lbz-icon
           ></template>
         </lbz-list-item>
-        <lbz-list-item class="lbz-state-no-before--descendant" :ripple="false">
+        <!-- <lbz-list-item class="lbz-state-no-before--descendant" :ripple="false">
           <img
             src="~/assets/img/wechat-qrcode.jpg"
             width="172px"
             height="172px"
-            alt="兰必钟个人订阅号"
+            alt="微信订阅号"
           />
-        </lbz-list-item>
+        </lbz-list-item> -->
       </lbz-list>
 
       <lbz-divider on-background="dark" />
@@ -270,10 +270,6 @@
         {
           href: 'https://zhuanlan.zhihu.com/bizhong',
           label: '知乎专栏'
-        },
-        {
-          href: 'https://juejin.im/user/5acce57b5188255c93239e72/posts',
-          label: '掘金'
         }
       ],
 
